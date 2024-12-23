@@ -17,23 +17,33 @@ function AdminSideNavbar() {
       <ul className="w-full space-y-6">
         <li className="flex items-center bg-white px-4 py-3 rounded-lg shadow-md">
           <GrOverview className="text-teal-700 mr-3" />
-          <span className="text-teal-700 font-medium">Overview</span>
+          <Link to="/Overview" className="text-teal-700 font-medium">
+            Overview
+          </Link>
         </li>
         <li className="flex items-center bg-white px-4 py-3 rounded-lg shadow-md">
           <FaRegCalendarAlt className="text-teal-700 mr-3" />
-          <span className="text-teal-700 font-medium">Calendar</span>
+          <Link to="/Calendar" className="text-teal-700 font-medium">
+            Calendar
+          </Link>
         </li>
         <li className="flex items-center bg-white px-4 py-3 rounded-lg shadow-md">
           <MdRoomService className="text-teal-700 mr-3" />
-          <span className="text-teal-700 font-medium">Services</span>
+          <Link to="/Services" className="text-teal-700 font-medium">
+            Services
+          </Link>
         </li>
         <li className="flex items-center bg-white px-4 py-3 rounded-lg shadow-md">
           <TbReportSearch className="text-teal-700 mr-3" />
-          <span className="text-teal-700 font-medium">Reports</span>
+          <Link to="/Reports" className="text-teal-700 font-medium">
+            Reports
+          </Link>
         </li>
         <li className="flex items-center bg-white px-4 py-3 rounded-lg shadow-md">
           <MdMiscellaneousServices className="text-teal-700 mr-3" />
-          <span className="text-teal-700 font-medium">Settings</span>
+          <Link to="/Settings" className="text-teal-700 font-medium">
+            Settings
+          </Link>
         </li>
       </ul>
     </nav>

@@ -9,9 +9,9 @@ import AdminSettings from "./Pages/AdminSettings";
 function App() {
   return (
     <Router>
-      <Login />
-      <div className="flex-grow p-6">
+      <div className="flex-grow">
         <Routes>
+          <Route path="/" element={<AdminOverview />} />
           <Route path="/Overview" element={<AdminOverview />} />
           <Route path="/Calendar" element={<AdminCalendar />} />
           <Route path="/Services" element={<AdminServices />} />

@@ -1,5 +1,7 @@
+import AdminSideNavbar from "../Components/AdminSideNavbar";
+
 function AdminReports() {
-  return <h1>Reports Page</h1>;
+  return <AdminSideNavbar />;
 }
 
 export default AdminReports;

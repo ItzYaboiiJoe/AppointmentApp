@@ -1,5 +1,7 @@
+import AdminSideNavbar from "../Components/AdminSideNavbar";
+
 function AdminSettings() {
-  return <h1>Settings Page</h1>;
+  return <AdminSideNavbar />;
 }
 
 export default AdminSettings;

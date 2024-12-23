@@ -1,5 +1,7 @@
+import AdminSideNavbar from "../Components/AdminSideNavbar";
+
 function AdminServices() {
-  return <h1>Services Page</h1>;
+  return <AdminSideNavbar />;
 }
 
 export default AdminServices;

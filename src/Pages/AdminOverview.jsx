@@ -1,5 +1,7 @@
+import AdminSideNavbar from "../Components/AdminSideNavbar";
+
 function AdminOverview() {
-  return <h1>Overview Page</h1>;
+  return <AdminSideNavbar />;
 }
 
 export default AdminOverview;
