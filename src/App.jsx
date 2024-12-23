@@ -12,11 +12,11 @@ function App() {
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<AdminOverview />} />
-          <Route path="/Overview" element={<AdminOverview />} />
-          <Route path="/Calendar" element={<AdminCalendar />} />
-          <Route path="/Services" element={<AdminServices />} />
-          <Route path="/Reports" element={<AdminReports />} />
-          <Route path="/Settings" element={<AdminSettings />} />
+          <Route path="/AdminOverview" element={<AdminOverview />} />
+          <Route path="/AdminCalendar" element={<AdminCalendar />} />
+          <Route path="/AdminServices" element={<AdminServices />} />
+          <Route path="/AdminReports" element={<AdminReports />} />
+          <Route path="/AdminSettings" element={<AdminSettings />} />
         </Routes>
       </div>
     </Router>
