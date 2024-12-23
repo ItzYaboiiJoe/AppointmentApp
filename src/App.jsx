@@ -1,7 +1,8 @@
 import Login from "./Components/Login";
+import AdminCalendar from "./Pages/AdminCalendar";
 
 function App() {
-  return <Login />;
+  return <AdminCalendar />;
 }
 
 export default App;
