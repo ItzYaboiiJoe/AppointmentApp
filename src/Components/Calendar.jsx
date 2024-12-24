@@ -21,8 +21,7 @@ function Calendar() {
   };
 
   return (
-    <div className="p-4 bg-gray-100 rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Admin Calendar</h2>
+    <div className="px-4 py-8">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -35,6 +34,7 @@ function Calendar() {
         dateClick={handleDateClick} // Attach date click handler
         editable={true}
         selectable={true}
+        height={765}
       />
     </div>
   );

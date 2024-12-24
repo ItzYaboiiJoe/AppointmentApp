@@ -11,7 +11,7 @@ function AdminCalendar() {
       <div className="flex-1 flex flex-col">
         <AdminTopNavbar pageTitle="Calendar" />
         {/* Body Content */}
-        <div className="flex-1 bg-gray-100 p-6">
+        <div className="flex-1 bg-[#EAF4F1] px-6">
           <Calendar />
         </div>
       </div>

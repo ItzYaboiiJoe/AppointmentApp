@@ -10,7 +10,7 @@ function AdminOverview() {
       <div className="flex-1 flex flex-col">
         <AdminTopNavbar pageTitle="Overview" />
         {/* Body Content */}
-        <div className="flex-1 bg-gray-100 p-6">
+        <div className="flex-1 bg-[#EAF4F1] p-6">
           <h1 className="text-gray-700 text-xl font-bold">Body Content</h1>
         </div>
       </div>
