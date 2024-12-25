@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.IconStyle {
+  @apply text-IconColor mr-3;
+}
+
+.MainStyle {
+  @apply text-IconColor font-medium;
+}
+
+.ButtonStyle {
+  @apply flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-HoverShade
+}
+
 /* General Button */
 .fc .fc-button-primary {
     background-color: transparent;

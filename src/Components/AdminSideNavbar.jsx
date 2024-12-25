@@ -6,7 +6,7 @@ import { TbReportSearch } from "react-icons/tb";
 
 function AdminSideNavbar() {
   return (
-    <nav className="w-48 bg-[#2A9D8F] h-screen flex flex-col items-center py-6">
+    <nav className="w-48 bg-Primary h-screen flex flex-col items-center py-6">
       {/* Business Name Section */}
       <div className="mb-10 text-white flex items-center flex-col">
         <div className="w-16 h-16 bg-gray-200 rounded-full mb-2"></div>
@@ -16,48 +16,33 @@ function AdminSideNavbar() {
       {/* Navigation Links */}
       <ul className="w-full space-y-6">
         <li className="w-full">
-          <Link
-            to="/AdminOverview"
-            className="flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-[#8AC7A4]"
-          >
-            <GrOverview className="text-[#264653] mr-3" />
-            <span className="text-[#264653] font-medium">Overview</span>
+          <Link to="/AdminOverview" className="ButtonStyle">
+            <GrOverview className="IconStyle" />
+            <span className="MainStyle">Overview</span>
           </Link>
         </li>
         <li className="w-full">
-          <Link
-            to="/AdminCalendar"
-            className="flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-[#8AC7A4]"
-          >
-            <FaRegCalendarAlt className="text-[#264653] mr-3" />
-            <span className="text-[#264653] font-medium">Calendar</span>
+          <Link to="/AdminCalendar" className="ButtonStyle">
+            <FaRegCalendarAlt className="IconStyle" />
+            <span className="MainStyle">Calendar</span>
           </Link>
         </li>
         <li className="w-full">
-          <Link
-            to="/AdminServices"
-            className="flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-[#8AC7A4]"
-          >
-            <MdRoomService className="text-[#264653] mr-3" />
-            <span className="text-[#264653] font-medium">Services</span>
+          <Link to="/AdminServices" className="ButtonStyle">
+            <MdRoomService className="IconStyle" />
+            <span className="MainStyle">Services</span>
           </Link>
         </li>
         <li className="w-full">
-          <Link
-            to="/AdminReports"
-            className="flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-[#8AC7A4]"
-          >
-            <TbReportSearch className="text-[#264653] mr-3" />
-            <span className="text-[#264653] font-medium">Reports</span>
+          <Link to="/AdminReports" className="ButtonStyle">
+            <TbReportSearch className="IconStyle" />
+            <span className="MainStyle">Reports</span>
           </Link>
         </li>
         <li className="w-full">
-          <Link
-            to="/AdminSettings"
-            className="flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-[#8AC7A4]"
-          >
-            <MdMiscellaneousServices className="text-[#264653] mr-3" />
-            <span className="text-[#264653] font-medium">Settings</span>
+          <Link to="/AdminSettings" className="ButtonStyle">
+            <MdMiscellaneousServices className="IconStyle" />
+            <span className="MainStyle">Settings</span>
           </Link>
         </li>
       </ul>
