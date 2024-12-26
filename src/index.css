@@ -48,3 +48,7 @@
 .fc-toolbar-title {
   font-weight: bold;
 }
+
+.active {
+  background-color: #8AC7A4;
+}
