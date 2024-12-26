@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { GrOverview } from "react-icons/gr";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdMiscellaneousServices, MdRoomService } from "react-icons/md";
@@ -13,37 +13,37 @@ function AdminSideNavbar() {
         <span className="text-lg font-semibold">Business Name</span>
       </div>
 
-      {/* Navigation Links */}
+      {/* Navigation NavLinks */}
       <ul className="w-full space-y-6">
         <li className="w-full">
-          <Link to="/AdminOverview" className="ButtonStyle">
+          <NavLink to="/AdminOverview" className="ButtonStyle">
             <GrOverview className="IconStyle" />
             <span className="MainStyle">Overview</span>
-          </Link>
+          </NavLink>
         </li>
         <li className="w-full">
-          <Link to="/AdminCalendar" className="ButtonStyle">
+          <NavLink to="/AdminCalendar" className="ButtonStyle">
             <FaRegCalendarAlt className="IconStyle" />
             <span className="MainStyle">Calendar</span>
-          </Link>
+          </NavLink>
         </li>
         <li className="w-full">
-          <Link to="/AdminServices" className="ButtonStyle">
+          <NavLink to="/AdminServices" className="ButtonStyle">
             <MdRoomService className="IconStyle" />
             <span className="MainStyle">Services</span>
-          </Link>
+          </NavLink>
         </li>
         <li className="w-full">
-          <Link to="/AdminReports" className="ButtonStyle">
+          <NavLink to="/AdminReports" className="ButtonStyle">
             <TbReportSearch className="IconStyle" />
             <span className="MainStyle">Reports</span>
-          </Link>
+          </NavLink>
         </li>
         <li className="w-full">
-          <Link to="/AdminSettings" className="ButtonStyle">
+          <NavLink to="/AdminSettings" className="ButtonStyle">
             <MdMiscellaneousServices className="IconStyle" />
             <span className="MainStyle">Settings</span>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>

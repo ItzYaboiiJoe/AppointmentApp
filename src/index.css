@@ -20,28 +20,31 @@
     color: #264653;
     border: 1px solid #C1C1C1;
     border-radius: 4px;
-  }
+}
   
   /* Active Button */
-  .fc .fc-button-primary:not(:disabled).fc-button-active {
+.fc .fc-button-primary:not(:disabled).fc-button-active {
     background-color: transparent;
     color: #264653;
     border: 1px solid #C1C1C1;
     opacity: 0.5;
-  }
+}
   
   /* Hover */
-  .fc .fc-button-primary:hover {
+.fc .fc-button-primary:hover {
     background-color: transparent;
     color: #264653;
-  }
+}
   
   /* Disabled Button */
-  .fc .fc-button-primary:disabled {
+.fc .fc-button-primary:disabled {
     background-color: transparent;
     color: #264653;
     opacity: 0.5;
     cursor: not-allowed;
     border: 1px solid #C1C1C1;
-  }
-  
+}
+
+.fc-toolbar-title {
+  font-weight: bold;
+}
