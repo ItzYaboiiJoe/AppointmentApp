@@ -1,6 +1,7 @@
 import AdminSideNavbar from "../Components/AdminSideNavbar";
 import AdminTopNavbar from "../Components/AdminTopNavbar";
 import AdminServicesCards from "../Components/AdminServicesCards";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 function AdminServices() {
   return (
@@ -12,6 +13,13 @@ function AdminServices() {
         <AdminTopNavbar pageTitle="Services" />
         {/* Body Content */}
         <div className="flex-1 bg-[#EAF4F1] p-6">
+          {/* Add New Button */}
+          <div className="float-right">
+            <button>
+              <IoAddCircleOutline size={35} color="#2A9D8F" />
+            </button>
+          </div>
+          {/* Services Cards */}
           <div className="grid grid-cols-4 gap-4 m-6">
             <AdminServicesCards />
           </div>
