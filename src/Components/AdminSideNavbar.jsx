@@ -15,31 +15,31 @@ function AdminSideNavbar() {
 
       {/* Navigation NavLinks */}
       <ul className="w-full space-y-6">
-        <li className="w-full">
+        <li className="w-full shadow-lg">
           <NavLink to="/AdminOverview" className="ButtonStyle">
             <GrOverview className="IconStyle" />
             <span className="MainStyle">Overview</span>
           </NavLink>
         </li>
-        <li className="w-full">
+        <li className="w-full shadow-lg">
           <NavLink to="/AdminCalendar" className="ButtonStyle">
             <FaRegCalendarAlt className="IconStyle" />
             <span className="MainStyle">Calendar</span>
           </NavLink>
         </li>
-        <li className="w-full">
+        <li className="w-full shadow-lg">
           <NavLink to="/AdminServices" className="ButtonStyle">
             <MdRoomService className="IconStyle" />
             <span className="MainStyle">Services</span>
           </NavLink>
         </li>
-        <li className="w-full">
+        <li className="w-full shadow-lg">
           <NavLink to="/AdminReports" className="ButtonStyle">
             <TbReportSearch className="IconStyle" />
             <span className="MainStyle">Reports</span>
           </NavLink>
         </li>
-        <li className="w-full">
+        <li className="w-full shadow-lg">
           <NavLink to="/AdminSettings" className="ButtonStyle">
             <MdMiscellaneousServices className="IconStyle" />
             <span className="MainStyle">Settings</span>
