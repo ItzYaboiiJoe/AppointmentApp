@@ -21,6 +21,11 @@ function AdminServicesCards() {
           <p className="CardsHeadersStyle">Description:</p>
           <p className="CardsInfoStyle">Standard Men Haircut</p>
         </div>
+        <div className="flex justify-end">
+          <button className="bg-transparent text-black rounded-lg hover:underline">
+            Edit
+          </button>
+        </div>
       </div>
     </div>
   );
