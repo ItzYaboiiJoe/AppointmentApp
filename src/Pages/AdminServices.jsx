@@ -1,5 +1,6 @@
 import AdminSideNavbar from "../Components/AdminSideNavbar";
 import AdminTopNavbar from "../Components/AdminTopNavbar";
+import AdminServicesCards from "../Components/AdminServicesCards";
 
 function AdminServices() {
   return (
@@ -11,7 +12,9 @@ function AdminServices() {
         <AdminTopNavbar pageTitle="Services" />
         {/* Body Content */}
         <div className="flex-1 bg-[#EAF4F1] p-6">
-          <h1 className="text-gray-700 text-xl font-bold">Body Content</h1>
+          <div className="grid grid-cols-4 gap-4 m-6">
+            <AdminServicesCards />
+          </div>
         </div>
       </div>
     </div>

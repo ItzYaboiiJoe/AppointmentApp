@@ -11,38 +11,46 @@
 }
 
 .ButtonStyle {
-  @apply flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-HoverShade
+  @apply flex items-center bg-white w-full px-4 py-3 rounded-lg shadow-md hover:bg-HoverShade;
+}
+
+.CardsHeadersStyle {
+  @apply mb-3 font-normal text-IconColor dark:text-gray-400;
+}
+
+.CardsInfoStyle {
+  @apply mb-3 font-normal text-black dark:text-gray-400;
 }
 
 /* General Button */
 .fc .fc-button-primary {
-    background-color: transparent;
-    color: #264653;
-    border: 1px solid #C1C1C1;
-    border-radius: 4px;
+  background-color: transparent;
+  color: #264653;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
 }
-  
-  /* Active Button */
+
+/* Active Button */
 .fc .fc-button-primary:not(:disabled).fc-button-active {
-    background-color: transparent;
-    color: #264653;
-    border: 1px solid #C1C1C1;
-    opacity: 0.5;
+  background-color: transparent;
+  color: #264653;
+  border: 1px solid #c1c1c1;
+  opacity: 0.5;
 }
-  
-  /* Hover */
+
+/* Hover */
 .fc .fc-button-primary:hover {
-    background-color: transparent;
-    color: #264653;
+  background-color: transparent;
+  color: #264653;
 }
-  
-  /* Disabled Button */
+
+/* Disabled Button */
 .fc .fc-button-primary:disabled {
-    background-color: transparent;
-    color: #264653;
-    opacity: 0.5;
-    cursor: not-allowed;
-    border: 1px solid #C1C1C1;
+  background-color: transparent;
+  color: #264653;
+  opacity: 0.5;
+  cursor: not-allowed;
+  border: 1px solid #c1c1c1;
 }
 
 .fc-toolbar-title {
@@ -50,5 +58,5 @@
 }
 
 .active {
-  background-color: #8AC7A4;
+  background-color: #8ac7a4;
 }
