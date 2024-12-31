@@ -25,6 +25,7 @@ function AddNewCardModal({ onClose }) {
         <h2 className="text-xl mb-4 text-IconColor">Add New Service</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
+            {/* Title Field */}
             <div>
               <label className="block text-IconColor">Title</label>
               <input
@@ -33,8 +34,10 @@ function AddNewCardModal({ onClose }) {
                 value={formData.title}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                required
               />
             </div>
+            {/* Price Field */}
             <div>
               <label className="block text-IconColor">Price</label>
               <input
@@ -43,20 +46,29 @@ function AddNewCardModal({ onClose }) {
                 value={formData.price}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                required
               />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
+            {/* Duration Field Dropdown */}
             <div>
               <label className="block text-IconColor">Duration</label>
-              <input
-                type="text"
+              <select
                 name="duration"
                 value={formData.duration}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
-              />
+                required
+              >
+                <option value="">Select duration</option>
+                <option value="15">15 Minutes</option>
+                <option value="30">30 Minutes</option>
+                <option value="45">45 Minutes</option>
+                <option value="60">60 Minutes</option>
+              </select>
             </div>
+            {/* Category Field */}
             <div>
               <label className="block text-IconColor">Category</label>
               <input
@@ -65,9 +77,11 @@ function AddNewCardModal({ onClose }) {
                 value={formData.category}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                required
               />
             </div>
           </div>
+          {/* Description Field */}
           <div className="mb-4">
             <label className="block text-IconColor">Description</label>
             <textarea
@@ -77,6 +91,7 @@ function AddNewCardModal({ onClose }) {
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
           </div>
+          {/* Save and Cancel Button */}
           <div className="flex justify-end">
             <button
               type="button"
@@ -87,7 +102,7 @@ function AddNewCardModal({ onClose }) {
             </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 shadow-xl"
+              className="bg-Primary text-white px-4 py-2 rounded hover:bg-[#1e6f65] shadow-xl"
             >
               Save
             </button>
