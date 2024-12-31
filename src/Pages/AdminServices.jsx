@@ -1,9 +1,21 @@
+import { useState } from "react";
 import AdminSideNavbar from "../Components/AdminSideNavbar";
 import AdminTopNavbar from "../Components/AdminTopNavbar";
 import AdminServicesCards from "../Components/AdminServicesCards";
 import { IoAddCircleOutline } from "react-icons/io5";
+import AddNewCardModal from "../Components/AddNewCardModal";
 
 function AdminServices() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleOpenModal() {
+    return setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    return setIsModalOpen(false);
+  }
+
   return (
     // side Navbar
     <div className="flex h-screen">
@@ -13,8 +25,11 @@ function AdminServices() {
         <AdminTopNavbar pageTitle="Services" />
         {/* Body Content */}
         <div className="flex-1 bg-[#EAF4F1] p-6">
-          {/* Add New Button */}
-          <button className="text-Primary float-right">
+          {/* Add New Button Modal */}
+          <button
+            className="text-Primary float-right"
+            onClick={handleOpenModal}
+          >
             <IoAddCircleOutline size={35} />
           </button>
           {/* Services Cards */}
@@ -22,6 +37,7 @@ function AdminServices() {
             <AdminServicesCards />
           </div>
         </div>
+        {isModalOpen && <AddNewCardModal onClose={handleCloseModal} />}
       </div>
     </div>
   );
