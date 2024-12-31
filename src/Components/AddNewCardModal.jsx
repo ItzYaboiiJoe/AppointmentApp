@@ -22,7 +22,7 @@ function AddNewCardModal({ onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg">
-        <h2 className="text-xl mb-4">Add New Service</h2>
+        <h2 className="text-xl mb-4 text-IconColor">Add New Service</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
@@ -81,13 +81,13 @@ function AddNewCardModal({ onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-700"
+              className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-700 shadow-xl"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 shadow-xl"
             >
               Save
             </button>
