@@ -1,13 +1,16 @@
+import { set } from "rsuite/esm/internals/utils/date";
 import supabase from "../Config/supabaseClient";
 import { useEffect, useState } from "react";
 
 function AdminServicesCards() {
   const [fetchError, setFetchError] = useState(null);
   const [cards, setCards] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCards = async () => {
-      const { data, error } = await supabase
+      setLoading(true);
+      const { data: servicesCardsInformation, error } = await supabase
         .from("servicesCardsInformation")
         .select("*");
 
@@ -16,22 +19,20 @@ function AdminServicesCards() {
         setCards(null);
         console.log(error);
       }
-      if (data) {
-        setCards(data);
+      if (servicesCardsInformation) {
+        setCards(servicesCardsInformation);
         setFetchError(null);
       }
+      setLoading(false);
     };
     fetchCards();
   }, []);
 
   return (
-    <div className="max-w-sm bg-HoverShade rounded-lg shadow-xl hover:shadow-2xl">
+    <div className="max-w-md bg-HoverShade rounded-lg shadow-xl hover:shadow-2xl">
       <div className="p-5">
-        {fetchError && (
-          <h5 className="mb-2 text-xl font-bold tracking-tight text-IconColor">
-            {fetchError}
-          </h5>
-        )}
+        {loading && <p>Loading...</p>}
+        {fetchError && <p className="text-red-500">{fetchError}</p>}
         {cards && (
           <div>
             {cards.map((card) => (
