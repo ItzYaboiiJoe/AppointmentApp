@@ -1,4 +1,5 @@
 import { useState } from "react";
+import supabase from "../Config/supabaseClient";
 
 function AddNewCardModal({ onClose }) {
   const [formData, setFormData] = useState({
@@ -14,9 +15,18 @@ function AddNewCardModal({ onClose }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onClose();
+    const { data, error } = await supabase
+      .from("servicesCardsInformation")
+      .insert([formData]);
+
+    if (error) {
+      console.error("Error inserting data:", error);
+    } else {
+      console.log("Data inserted successfully:", data);
+      onClose();
+    }
   };
 
   return (
