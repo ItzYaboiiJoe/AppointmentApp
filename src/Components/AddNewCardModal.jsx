@@ -72,10 +72,10 @@ function AddNewCardModal({ onClose }) {
                 required
               >
                 <option value="">Select duration</option>
-                <option value="15">15 Minutes</option>
-                <option value="30">30 Minutes</option>
-                <option value="45">45 Minutes</option>
-                <option value="60">60 Minutes</option>
+                <option value="15 Minutes">15 Minutes</option>
+                <option value="30 Minutes">30 Minutes</option>
+                <option value="45 Minutes">45 Minutes</option>
+                <option value="60 Minutes">60 Minutes</option>
               </select>
             </div>
             {/* Category Field */}
