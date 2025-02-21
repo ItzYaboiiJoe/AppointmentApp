@@ -1,5 +1,4 @@
 import { useState } from "react";
-import supabase from "../Config/supabaseClient";
 
 function AddNewCardModal({ onClose }) {
   const [formData, setFormData] = useState({
@@ -15,18 +14,9 @@ function AddNewCardModal({ onClose }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { data, error } = await supabase
-      .from("servicesCardsInformation")
-      .insert([formData]);
-
-    if (error) {
-      console.error("Error inserting data:", error);
-    } else {
-      console.log("Data inserted successfully:", data);
-      onClose();
-    }
+    onClose();
   };
 
   return (
@@ -72,10 +62,10 @@ function AddNewCardModal({ onClose }) {
                 required
               >
                 <option value="">Select duration</option>
-                <option value="15 Minutes">15 Minutes</option>
-                <option value="30 Minutes">30 Minutes</option>
-                <option value="45 Minutes">45 Minutes</option>
-                <option value="60 Minutes">60 Minutes</option>
+                <option value="15">15 Minutes</option>
+                <option value="30">30 Minutes</option>
+                <option value="45">45 Minutes</option>
+                <option value="60">60 Minutes</option>
               </select>
             </div>
             {/* Category Field */}
@@ -106,7 +96,7 @@ function AddNewCardModal({ onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="bg-gray-400 text-white px-4 py-2 rounded mr-2 hover:bg-gray-500 shadow-xl"
+              className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-700 shadow-xl"
             >
               Cancel
             </button>
