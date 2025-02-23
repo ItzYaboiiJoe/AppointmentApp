@@ -1,22 +1,40 @@
 import { useState } from "react";
+import { fireStore } from "../Config/firebase-config";
+import { collection, doc, addDoc } from "firebase/firestore";
 
 function AddNewCardModal({ onClose }) {
-  const [formData, setFormData] = useState({
-    title: "",
-    price: "",
-    duration: "",
-    category: "",
-    description: "",
+  const [service, setService] = useState({
+    Title: "",
+    Price: "",
+    Duration: "",
+    Category: "",
+    Description: "",
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const servicesDocRef = doc(fireStore, "Joe BarberShop", "Services");
+      const subCollectionRef = collection(servicesDocRef, service.Title);
+      await addDoc(subCollectionRef, {
+        Title: service.Title,
+        Price: service.Price,
+        Duration: service.Duration,
+        Category: service.Category,
+        Description: service.Description,
+      });
+      onClose();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onClose();
+    setService((prevService) => ({
+      ...prevService,
+      [name]: value,
+    }));
   };
 
   return (
@@ -30,10 +48,10 @@ function AddNewCardModal({ onClose }) {
               <label className="block text-IconColor">Title</label>
               <input
                 type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                name="Title"
+                value={service.Title}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -42,10 +60,10 @@ function AddNewCardModal({ onClose }) {
               <label className="block text-IconColor">Price</label>
               <input
                 type="text"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                name="Price"
+                value={service.Price}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -55,10 +73,10 @@ function AddNewCardModal({ onClose }) {
             <div>
               <label className="block text-IconColor">Duration</label>
               <select
-                name="duration"
-                value={formData.duration}
-                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                name="Duration"
+                value={service.Duration}
+                onChange={handleChange}
                 required
               >
                 <option value="">Select duration</option>
@@ -73,10 +91,10 @@ function AddNewCardModal({ onClose }) {
               <label className="block text-IconColor">Category</label>
               <input
                 type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                name="Category"
+                value={service.Category}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -85,10 +103,11 @@ function AddNewCardModal({ onClose }) {
           <div className="mb-4">
             <label className="block text-IconColor">Description</label>
             <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded mt-1"
+              name="Description"
+              value={service.Description}
+              onChange={handleChange}
+              required
             />
           </div>
           {/* Save and Cancel Button */}

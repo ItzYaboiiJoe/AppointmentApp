@@ -1,6 +1,11 @@
+import { TiDeleteOutline } from "react-icons/ti";
+
 function AdminServicesCards() {
   return (
     <div className="max-w-sm bg-HoverShade rounded-lg shadow-xl hover:shadow-2xl">
+      <button className="text-IconColor float-right rounded-sm m-2">
+        <TiDeleteOutline size={25} />
+      </button>
       <div className="p-5">
         <h5 className="mb-2 text-xl font-bold tracking-tight text-IconColor">
           Regular Haircut
