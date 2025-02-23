@@ -1,9 +1,25 @@
 import { TiDeleteOutline } from "react-icons/ti";
+import ConfirmServiceDeleteModal from "./ConfirmServiceDeleteModal";
+import { useState } from "react";
 
 function AdminServicesCards({ service }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleOpenModal() {
+    return setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    return setIsModalOpen(false);
+  }
+
   return (
     <div className="max-w-sm bg-HoverShade rounded-lg shadow-xl hover:shadow-2xl">
-      <button className="text-IconColor float-right rounded-sm m-2">
+      {/* Delete Card Button */}
+      <button
+        className="text-IconColor float-right rounded-sm m-2"
+        onClick={handleOpenModal}
+      >
         <TiDeleteOutline size={25} />
       </button>
       <div className="p-5">
@@ -32,6 +48,7 @@ function AdminServicesCards({ service }) {
           </button>
         </div>
       </div>
+      {isModalOpen && <ConfirmServiceDeleteModal onClose={handleCloseModal} />}
     </div>
   );
 }
