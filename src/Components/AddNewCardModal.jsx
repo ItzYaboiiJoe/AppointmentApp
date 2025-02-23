@@ -15,7 +15,7 @@ function AddNewCardModal({ onClose }) {
     e.preventDefault();
     try {
       const servicesDocRef = doc(fireStore, "Joe BarberShop", "Services");
-      const subCollectionRef = collection(servicesDocRef, service.Title);
+      const subCollectionRef = collection(servicesDocRef, "Services");
       await addDoc(subCollectionRef, {
         Title: service.Title,
         Price: service.Price,
@@ -25,7 +25,7 @@ function AddNewCardModal({ onClose }) {
       });
       onClose();
     } catch (error) {
-      console.error("Error adding document: ", error);
+      alert("Error adding document: ", error);
     }
   };
 
