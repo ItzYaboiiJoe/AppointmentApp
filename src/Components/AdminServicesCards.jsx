@@ -48,7 +48,12 @@ function AdminServicesCards({ service }) {
           </button>
         </div>
       </div>
-      {isModalOpen && <ConfirmServiceDeleteModal onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <ConfirmServiceDeleteModal
+          onClose={handleCloseModal}
+          serviceId={service.id}
+        />
+      )}
     </div>
   );
 }
