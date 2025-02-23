@@ -49,7 +49,7 @@ function AdminServices() {
   function noServices() {
     if (!loading && services.length === 0) {
       return (
-        <div className="max-w-sm bg-red-100 rounded-lg shadow-xl p-4 mb-4">
+        <div>
           <p className="text-gray-700 text-xl font-bold">No services Created</p>
         </div>
       );
@@ -74,7 +74,7 @@ function AdminServices() {
           </button>
           {/* Loading Message */}
           {loading && (
-            <div className="max-w-sm bg-blue-100 rounded-lg shadow-xl p-4 mb-4">
+            <div>
               <p className="text-gray-700 text-xl font-bold">
                 Loading services...
               </p>
