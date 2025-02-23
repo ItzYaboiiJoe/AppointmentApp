@@ -20,7 +20,7 @@ function AdminServices() {
           fireStore,
           "Joe BarberShop",
           "Services",
-          "Services"
+          "ServicesList"
         );
         const servicesSnapshot = await getDocs(servicesCollectionRef);
         const servicesList = servicesSnapshot.docs.map((doc) => ({

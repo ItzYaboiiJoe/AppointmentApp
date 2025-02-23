@@ -15,7 +15,7 @@ function AddNewCardModal({ onClose }) {
     e.preventDefault();
     try {
       const servicesDocRef = doc(fireStore, "Joe BarberShop", "Services");
-      const subCollectionRef = collection(servicesDocRef, "Services");
+      const subCollectionRef = collection(servicesDocRef, "ServicesList");
       await addDoc(subCollectionRef, {
         Title: service.Title,
         Price: service.Price,
