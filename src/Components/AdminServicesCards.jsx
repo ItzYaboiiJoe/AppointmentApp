@@ -1,16 +1,26 @@
 import { TiDeleteOutline } from "react-icons/ti";
 import ConfirmServiceDeleteModal from "./ConfirmServiceDeleteModal";
+import EditServiceCardModal from "./EditServiceCardModal";
 import { useState } from "react";
 
 function AdminServicesCards({ service }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  function handleOpenModal() {
-    return setIsModalOpen(true);
+  function handleDeleteOpenModal() {
+    return setIsDeleteModalOpen(true);
   }
 
-  function handleCloseModal() {
-    return setIsModalOpen(false);
+  function handleDeleteCloseModal() {
+    return setIsDeleteModalOpen(false);
+  }
+
+  function handleEditOpenModal() {
+    return setIsEditModalOpen(true);
+  }
+
+  function handleEditCloseModal() {
+    return setIsEditModalOpen(false);
   }
 
   return (
@@ -18,7 +28,7 @@ function AdminServicesCards({ service }) {
       {/* Delete Card Button */}
       <button
         className="text-IconColor float-right rounded-sm m-2"
-        onClick={handleOpenModal}
+        onClick={handleDeleteOpenModal}
       >
         <TiDeleteOutline size={25} />
       </button>
@@ -42,15 +52,25 @@ function AdminServicesCards({ service }) {
           <p className="CardsHeadersStyle">Description:</p>
           <p className="CardsInfoStyle">{service.Description}</p>
         </div>
+        {/* Edit Button */}
         <div className="flex justify-end">
-          <button className="bg-transparent text-black rounded-lg hover:underline">
+          <button
+            className="bg-transparent text-black rounded-lg hover:underline"
+            onClick={handleEditOpenModal}
+          >
             Edit
           </button>
         </div>
       </div>
-      {isModalOpen && (
+      {isDeleteModalOpen && (
         <ConfirmServiceDeleteModal
-          onClose={handleCloseModal}
+          onClose={handleDeleteCloseModal}
+          serviceId={service.id}
+        />
+      )}
+      {isEditModalOpen && (
+        <EditServiceCardModal
+          onClose={handleEditCloseModal}
           serviceId={service.id}
         />
       )}
