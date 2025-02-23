@@ -6,14 +6,12 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import AddNewCardModal from "../Components/AddNewCardModal";
 import { fireStore } from "../Config/firebase-config";
 import { collection, getDocs } from "firebase/firestore";
-import ConfirmServiceDeleteModal from "../Components/ConfirmServiceDeleteModal";
 
 function AdminServices() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [serviceToDelete, setServiceToDelete] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,12 +96,6 @@ function AdminServices() {
           </div>
         </div>
         {isModalOpen && <AddNewCardModal onClose={handleCloseModal} />}
-        {serviceToDelete && (
-          <ConfirmServiceDeleteModal
-            serviceId={serviceToDelete}
-            onClose={() => setServiceToDelete(null)}
-          />
-        )}
       </div>
     </div>
   );

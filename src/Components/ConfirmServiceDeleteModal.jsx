@@ -1,7 +1,26 @@
 import { fireStore } from "../Config/firebase-config";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 function ConfirmServiceDeleteModal({ onClose, serviceId }) {
+  const [service, setService] = useState("");
+
+  useEffect(() => {
+    const fetchServiceTitle = async () => {
+      const serviceDocRef = doc(
+        fireStore,
+        "Joe BarberShop",
+        "Services",
+        "ServicesList",
+        serviceId
+      );
+      const serviceDoc = await getDoc(serviceDocRef);
+      setService(serviceDoc.data().Title);
+    };
+
+    fetchServiceTitle();
+  }, [serviceId]);
+
   const handleDelete = async () => {
     const serviceDocRef = doc(
       fireStore,
@@ -18,7 +37,7 @@ function ConfirmServiceDeleteModal({ onClose, serviceId }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg">
         <h2 className="text-xl mb-4 text-IconColor">
-          Are you sure you want to delete (Insert Service Name) Service
+          Are you sure you want to delete {service} service
         </h2>
         <div className="flex justify-between">
           <button
