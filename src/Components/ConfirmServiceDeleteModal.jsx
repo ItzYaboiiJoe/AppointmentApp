@@ -50,7 +50,7 @@ function ConfirmServiceDeleteModal({ onClose, serviceId }) {
           <button
             type="button"
             onClick={handleDelete}
-            className="bg-red-700 text-white px-4 py-2 rounded mr-2 hover:bg-gray-700 shadow-xl"
+            className="bg-red-700 text-white px-4 py-2 rounded mr-2 hover:bg-red-900 shadow-xl"
           >
             Delete
           </button>
