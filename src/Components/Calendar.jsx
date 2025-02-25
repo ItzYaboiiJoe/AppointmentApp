@@ -6,7 +6,7 @@ import multiMonthPlugin from "@fullcalendar/multimonth";
 
 function Calendar() {
   return (
-    <div className="calendar-container">
+    <div className="px-4 py-8">
       <FullCalendar
         plugins={[
           dayGridPlugin,
@@ -29,7 +29,7 @@ function Calendar() {
         }}
         editable={true}
         selectable={true}
-        height="100%"
+        height={765}
       />
     </div>
   );
