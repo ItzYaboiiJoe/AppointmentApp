@@ -29,7 +29,7 @@ function Calendar() {
         }}
         editable={true}
         selectable={true}
-        aspectRatio={2}
+        aspectRatio={2.4}
       />
     </div>
   );
