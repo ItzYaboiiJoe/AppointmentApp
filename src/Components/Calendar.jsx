@@ -29,7 +29,6 @@ function Calendar() {
         }}
         editable={true}
         selectable={true}
-        height={600}
         aspectRatio={2}
       />
     </div>
