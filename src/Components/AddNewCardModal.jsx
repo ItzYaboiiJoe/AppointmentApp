@@ -105,6 +105,7 @@ function AddNewCardModal({ onClose }) {
             <textarea
               className="w-full p-2 border border-gray-300 rounded mt-1"
               name="Description"
+              rows={4}
               value={service.Description}
               onChange={handleChange}
               required
