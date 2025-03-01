@@ -15,11 +15,11 @@
 }
 
 .CardsHeadersStyle {
-  @apply mb-3 font-normal text-IconColor dark:text-gray-400;
+  @apply mb-3 font-normal text-IconColor ;
 }
 
 .CardsInfoStyle {
-  @apply mb-3 font-normal text-black dark:text-gray-400;
+  @apply mb-3 font-normal text-black ;
 }
 
 /* General Button */
