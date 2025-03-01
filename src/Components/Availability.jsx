@@ -67,7 +67,7 @@ function Availability() {
       <div className="grid grid-cols-3 gap-4 mb-2 text-sm font-medium">
         <span className="text-left">Select Days</span>
         <span className="text-center">Opening Time</span>
-        <span className="text-center">Fucking Time</span>
+        <span className="text-center">Closing Time</span>
       </div>
 
       <div className="space-y-2">
