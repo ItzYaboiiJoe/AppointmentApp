@@ -1,5 +1,6 @@
 import AdminSideNavbar from "../Components/AdminSideNavbar";
 import AdminTopNavbar from "../Components/AdminTopNavbar";
+import Availability from "../Components/Availability";
 
 function AdminSettings() {
   return (
@@ -11,7 +12,7 @@ function AdminSettings() {
         <AdminTopNavbar pageTitle="Settings" />
         {/* Body Content */}
         <div className="flex-1 bg-[#EAF4F1] p-6">
-          <h1 className="text-gray-700 text-xl font-bold">Body Content</h1>
+          <Availability />
         </div>
       </div>
     </div>
