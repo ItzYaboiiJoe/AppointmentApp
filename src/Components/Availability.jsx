@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { fireStore } from "../Config/firebase-config";
 import { doc, setDoc } from "firebase/firestore";
+import AvailabilityNotificationModal from "./AvailabilityNotificationModal";
 
 function Availability() {
   const days = [
@@ -78,6 +79,8 @@ function Availability() {
     days.reduce((acc, day) => ({ ...acc, [day]: false }), {})
   );
 
+  const [notificationMessage, setNotificationMessage] = useState("");
+
   const handleCheckboxChange = (day) => {
     setCheckedDays((prev) => ({ ...prev, [day]: !prev[day] }));
   };
@@ -113,11 +116,15 @@ function Availability() {
 
     try {
       await setDoc(hoursDocRef, daysData);
-      alert("Availability saved successfully!");
+      setNotificationMessage("Availability Saved");
     } catch (error) {
       console.error("Error saving availability: ", error);
-      alert("Failed to save availability.");
+      setNotificationMessage("Failed to save availability.");
     }
+  };
+
+  const handleCloseNotification = () => {
+    setNotificationMessage("");
   };
 
   return (
@@ -189,6 +196,12 @@ function Availability() {
           Save
         </button>
       </div>
+      {notificationMessage && (
+        <AvailabilityNotificationModal
+          message={notificationMessage}
+          onClose={handleCloseNotification}
+        />
+      )}
     </div>
   );
 }
