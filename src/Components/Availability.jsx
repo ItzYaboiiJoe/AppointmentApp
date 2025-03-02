@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { fireStore } from "../Config/firebase-config";
+import { doc, setDoc } from "firebase/firestore";
 
 function Availability() {
   const days = [
@@ -62,12 +64,60 @@ function Availability() {
     "11:30 PM",
   ];
 
+  const [time, setTime] = useState(
+    days.reduce(
+      (acc, day) => ({
+        ...acc,
+        [day]: { OpeningTime: "", ClosingTime: "" },
+      }),
+      {}
+    )
+  );
+
   const [checkedDays, setCheckedDays] = useState(
     days.reduce((acc, day) => ({ ...acc, [day]: false }), {})
   );
 
   const handleCheckboxChange = (day) => {
     setCheckedDays((prev) => ({ ...prev, [day]: !prev[day] }));
+  };
+
+  const handleTimeChange = (day, type, value) => {
+    setTime((prev) => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [type]: value,
+      },
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
+
+    const daysData = days.reduce((acc, day) => {
+      if (checkedDays[day]) {
+        acc[day] = {
+          OpeningTime: time[day]?.OpeningTime || "",
+          ClosingTime: time[day]?.ClosingTime || "",
+          Status: "Open",
+        };
+      } else {
+        acc[day] = {
+          Status: "Closed",
+        };
+      }
+      return acc;
+    }, {});
+
+    try {
+      await setDoc(hoursDocRef, daysData);
+      alert("Availability saved successfully!");
+    } catch (error) {
+      console.error("Error saving availability: ", error);
+      alert("Failed to save availability.");
+    }
   };
 
   return (
@@ -100,6 +150,9 @@ function Availability() {
                 !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
               }`}
               disabled={!checkedDays[day]}
+              onChange={(e) =>
+                handleTimeChange(day, "OpeningTime", e.target.value)
+              }
             >
               {hours.map((hour) => (
                 <option key={hour} value={hour}>
@@ -114,6 +167,9 @@ function Availability() {
                 !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
               }`}
               disabled={!checkedDays[day]}
+              onChange={(e) =>
+                handleTimeChange(day, "ClosingTime", e.target.value)
+              }
             >
               {hours.map((hour) => (
                 <option key={hour} value={hour}>
@@ -124,8 +180,12 @@ function Availability() {
           </div>
         ))}
       </div>
+      {/* Save Button */}
       <div className="flex justify-end">
-        <button className="bg-Primary text-white px-4 py-1 mt-4 mr-4 rounded hover:bg-[#1e6f65] shadow-xl">
+        <button
+          className="bg-Primary text-white px-4 py-1 mt-4 mr-4 rounded hover:bg-[#1e6f65] shadow-xl"
+          onClick={handleSubmit}
+        >
           Save
         </button>
       </div>
