@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function Availability() {
   const days = [
     "Sunday",
@@ -60,6 +62,14 @@ function Availability() {
     "11:30 PM",
   ];
 
+  const [checkedDays, setCheckedDays] = useState(
+    days.reduce((acc, day) => ({ ...acc, [day]: false }), {})
+  );
+
+  const handleCheckboxChange = (day) => {
+    setCheckedDays((prev) => ({ ...prev, [day]: !prev[day] }));
+  };
+
   return (
     <div className="p-6 max-w-lg">
       <h1 className="text-lg font-semibold mb-2">Availability</h1>
@@ -75,12 +85,22 @@ function Availability() {
           <div key={day} className="grid grid-cols-3 gap-4 items-center">
             {/* Checkbox */}
             <label className="flex items-center space-x-2">
-              <input type="checkbox" className="w-4 h-4" />
+              <input
+                type="checkbox"
+                className="w-4 h-4"
+                checked={checkedDays[day]}
+                onChange={() => handleCheckboxChange(day)}
+              />
               <span>{day}</span>
             </label>
 
             {/* Opening Time Dropdown */}
-            <select className="border rounded-md p-1 text-sm w-32">
+            <select
+              className={`border rounded-md p-1 text-sm w-32 ${
+                !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
+              }`}
+              disabled={!checkedDays[day]}
+            >
               {hours.map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}
@@ -89,7 +109,12 @@ function Availability() {
             </select>
 
             {/* Closing Time Dropdown */}
-            <select className="border rounded-md p-1 text-sm w-32">
+            <select
+              className={`border rounded-md p-1 text-sm w-32 ${
+                !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
+              }`}
+              disabled={!checkedDays[day]}
+            >
               {hours.map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}
@@ -98,6 +123,11 @@ function Availability() {
             </select>
           </div>
         ))}
+      </div>
+      <div className="flex justify-end">
+        <button className="bg-Primary text-white px-4 py-1 mt-4 mr-4 rounded hover:bg-[#1e6f65] shadow-xl">
+          Save
+        </button>
       </div>
     </div>
   );
