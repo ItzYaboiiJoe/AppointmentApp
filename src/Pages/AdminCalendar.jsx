@@ -8,10 +8,10 @@ function AdminCalendar() {
     <div className="flex h-screen">
       <AdminSideNavbar />
       {/* Top Navbar */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col bg-[#EAF4F1]">
         <AdminTopNavbar pageTitle="Calendar" />
         {/* Body Content */}
-        <div className="flex-1 bg-[#EAF4F1] px-6">
+        <div className="px-6">
           <Calendar />
         </div>
       </div>

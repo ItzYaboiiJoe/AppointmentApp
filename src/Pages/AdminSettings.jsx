@@ -1,6 +1,6 @@
 import AdminSideNavbar from "../Components/AdminSideNavbar";
 import AdminTopNavbar from "../Components/AdminTopNavbar";
-import Availability from "../Components/Availability";
+import BusinessInfoForm from "../Components/BusinessInfoForm";
 
 function AdminSettings() {
   return (
@@ -11,8 +11,8 @@ function AdminSettings() {
       <div className="flex-1 flex flex-col">
         <AdminTopNavbar pageTitle="Settings" />
         {/* Body Content */}
-        <div className="flex-1 bg-[#EAF4F1] p-6">
-          <Availability />
+        <div className="bg-[#EAF4F1] p-6">
+          <BusinessInfoForm />
         </div>
       </div>
     </div>
