@@ -1,4 +1,13 @@
+import { useState } from "react";
+import Availability from "./Availability";
+
 function BusinessInfoForm() {
+  const [showAvailability, setShowAvailability] = useState(false);
+
+  const handleBusinessHoursClick = () => {
+    setShowAvailability(true);
+  };
+
   return (
     <form>
       <div className="flex flex-col space-y-2 ml-5">
@@ -29,10 +38,19 @@ function BusinessInfoForm() {
         </div>
         {/* Business Hours */}
         <div>
-          <button className="bg-Primary text-white px-4 py-1 shadow-xl rounded hover:bg-[#1e6f65] w-64">
+          <button
+            type="button"
+            className="bg-Primary text-white px-4 py-1 shadow-xl rounded hover:bg-[#1e6f65] w-64"
+            onClick={handleBusinessHoursClick}
+          >
             Business Hours
           </button>
         </div>
+        {showAvailability && (
+          <div className="mt-4">
+            <Availability />
+          </div>
+        )}
       </div>
     </form>
   );
