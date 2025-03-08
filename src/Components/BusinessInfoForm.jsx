@@ -3,10 +3,20 @@ import Availability from "./Availability";
 
 function BusinessInfoForm() {
   const [showAvailability, setShowAvailability] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBusinessHoursClick = () => {
     setShowAvailability(true);
   };
+
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+    setShowAvailability(false);
+  }
 
   return (
     <form>
@@ -48,7 +58,7 @@ function BusinessInfoForm() {
         </div>
         {showAvailability && (
           <div className="mt-4">
-            <Availability />
+            <Availability onClose={handleCloseModal} />
           </div>
         )}
       </div>

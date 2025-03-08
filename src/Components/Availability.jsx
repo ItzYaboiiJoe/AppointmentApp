@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { fireStore } from "../Config/firebase-config";
 import { doc, setDoc } from "firebase/firestore";
-import AvailabilityNotificationModal from "./AvailabilityNotificationModal";
 
-function Availability() {
+function Availability({ onClose }) {
   const days = [
     "Sunday",
     "Monday",
@@ -79,7 +78,7 @@ function Availability() {
     days.reduce((acc, day) => ({ ...acc, [day]: false }), {})
   );
 
-  const [notificationMessage, setNotificationMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleCheckboxChange = (day) => {
     setCheckedDays((prev) => ({ ...prev, [day]: !prev[day] }));
@@ -116,15 +115,10 @@ function Availability() {
 
     try {
       await setDoc(hoursDocRef, daysData);
-      setNotificationMessage("Availability Saved");
+      setMessage("Availability Updated Successfully");
     } catch (error) {
-      console.error("Error saving availability: ", error);
-      setNotificationMessage("Failed to save availability.");
+      setMessage("Failed to Update Availability");
     }
-  };
-
-  const handleCloseNotification = () => {
-    setNotificationMessage("");
   };
 
   return (
@@ -189,21 +183,26 @@ function Availability() {
               </div>
             ))}
           </div>
-          {/* Save Button */}
           <div className="flex justify-end">
+            {/* Save button Status */}
+            <div>
+              <p className="px-4 py-1 mt-4 mr-4">{message}</p>
+            </div>
+            {/* Close Button */}
             <button
-              className="bg-Primary text-white px-4 py-1 mt-4 mr-4 rounded hover:bg-[#1e6f65] shadow-xl"
+              className="bg-gray-500 text-white px-4 py-1 mt-4 mr-4 rounded hover:bg-gray-700 shadow-xl"
+              onClick={onClose}
+            >
+              Close
+            </button>
+            {/* Save Button */}
+            <button
+              className="bg-Primary text-white px-4 py-1 mt-4 rounded hover:bg-[#1e6f65] shadow-xl"
               onClick={handleSubmit}
             >
               Save
             </button>
           </div>
-          {notificationMessage && (
-            <AvailabilityNotificationModal
-              message={notificationMessage}
-              onClose={handleCloseNotification}
-            />
-          )}
         </div>
       </div>
     </div>
