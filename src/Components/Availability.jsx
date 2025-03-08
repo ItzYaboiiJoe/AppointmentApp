@@ -186,7 +186,7 @@ function Availability({ onClose }) {
           <div className="flex justify-end">
             {/* Save button Status */}
             <div>
-              <p className="px-4 py-1 mt-4 mr-4">{message}</p>
+              <p className="text-sm px-4 py-1 mt-4 mr-4">{message}</p>
             </div>
             {/* Close Button */}
             <button
