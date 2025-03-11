@@ -1,10 +1,12 @@
 import { fireStore } from "../Config/firebase-config";
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { data } from "autoprefixer";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
 function NewAppointmentModal({ onClose }) {
   const [services, setServices] = useState([]);
+  const [hoursOfOperation, setHoursOfOperation] = useState({});
+  const [selectedDate, setSelectedDate] = useState("");
+  const [availableTimes, setAvailableTimes] = useState([]);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -27,8 +29,79 @@ function NewAppointmentModal({ onClose }) {
       setServices(servicesList);
     };
 
+    const fetchHoursOfOperation = async () => {
+      const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
+      const hoursSnapshot = await getDoc(hoursDocRef);
+      if (hoursSnapshot.exists()) {
+        setHoursOfOperation(hoursSnapshot.data());
+      }
+    };
+
     fetchServices();
+    fetchHoursOfOperation();
   }, []);
+
+  const handleDateChange = (event) => {
+    const selectedDate = event.target.value;
+    setSelectedDate(selectedDate);
+
+    const dateObj = new Date(selectedDate + "T00:00:00");
+
+    const dayOfWeek = dateObj.toLocaleDateString("en-US", {
+      weekday: "long",
+      timeZone: "America/New_York",
+    });
+
+    const dayData = hoursOfOperation[dayOfWeek];
+
+    if (dayData && dayData.Status === "Open") {
+      generateTimeSlots(dayData.OpeningTime, dayData.ClosingTime);
+    } else {
+      setAvailableTimes([]);
+    }
+  };
+
+  const generateTimeSlots = (openingTime, closingTime) => {
+    const timeSlots = [];
+    let [startHour, startMinute, startPeriod] = openingTime
+      .match(/(\d+):(\d+)\s*(AM|PM)/)
+      .slice(1);
+    let [endHour, endMinute, endPeriod] = closingTime
+      .match(/(\d+):(\d+)\s*(AM|PM)/)
+      .slice(1);
+
+    startHour = parseInt(startHour, 10);
+    startMinute = parseInt(startMinute, 10);
+    endHour = parseInt(endHour, 10);
+    endMinute = parseInt(endMinute, 10);
+
+    if (startPeriod === "PM" && startHour !== 12) startHour += 12;
+    if (endPeriod === "PM" && endHour !== 12) endHour += 12;
+    if (startPeriod === "AM" && startHour === 12) startHour = 0;
+    if (endPeriod === "AM" && endHour === 12) endHour = 0;
+
+    let currentHour = startHour;
+    let currentMinute = startMinute;
+
+    while (
+      currentHour < endHour ||
+      (currentHour === endHour && currentMinute < endMinute)
+    ) {
+      const formattedHour = currentHour % 12 === 0 ? 12 : currentHour % 12;
+      const formattedMinute = currentMinute.toString().padStart(2, "0");
+      const amPm = currentHour < 12 ? "AM" : "PM";
+
+      timeSlots.push(`${formattedHour}:${formattedMinute} ${amPm}`);
+
+      currentMinute += 15;
+      if (currentMinute >= 60) {
+        currentMinute = 0;
+        currentHour += 1;
+      }
+    }
+
+    setAvailableTimes(timeSlots);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -67,14 +140,14 @@ function NewAppointmentModal({ onClose }) {
                 required
               />
             </div>
-            {/* Service */}
+            {/* Service Dropdown */}
             <div>
               <label className="block text-IconColor">Service</label>
               <select
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 required
               >
-                <option value=""> </option>
+                <option value="">Select a service</option>
                 {services.map((service) => (
                   <option key={service.id} value={service.title}>
                     {service.title}
@@ -84,23 +157,35 @@ function NewAppointmentModal({ onClose }) {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
-            {/* Date */}
+            {/* Date Selection */}
             <div>
               <label className="block text-IconColor">Date</label>
               <input
                 type="date"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                onChange={handleDateChange}
+                min={new Date().toISOString().split("T")[0]}
                 required
               />
             </div>
-            {/* Time */}
+            {/* Time Dropdown */}
             <div>
               <label className="block text-IconColor">Time</label>
-              <input
-                type="text"
+              <select
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 required
-              />
+              >
+                <option value="">Select a time</option>
+                {availableTimes.length > 0 ? (
+                  availableTimes.map((time, index) => (
+                    <option key={index} value={time}>
+                      {time}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">Closed</option>
+                )}
+              </select>
             </div>
           </div>
           {/* Submit and Cancel Buttons */}
@@ -113,8 +198,7 @@ function NewAppointmentModal({ onClose }) {
               Cancel
             </button>
             <button
-              type="button"
-              onClick={onClose}
+              type="submit"
               className="bg-Primary text-white px-4 py-2 rounded hover:bg-[#1e6f65] shadow-xl"
             >
               Submit
