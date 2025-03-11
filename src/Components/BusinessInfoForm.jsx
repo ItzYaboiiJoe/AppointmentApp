@@ -22,7 +22,7 @@ function BusinessInfoForm() {
         <div>
           <input
             type="text"
-            placeholder="Name"
+            placeholder=" Name"
             className="border-solid border border-black rounded w-64"
           />
         </div>
@@ -30,7 +30,7 @@ function BusinessInfoForm() {
         <div>
           <input
             type="text"
-            placeholder="Street Address"
+            placeholder=" Street Address"
             className="border-solid border border-black rounded w-64"
           />
         </div>
@@ -39,7 +39,7 @@ function BusinessInfoForm() {
           <div>
             <input
               type="text"
-              placeholder="City"
+              placeholder=" City"
               className="border-solid border border-black rounded w-20"
             />
           </div>
@@ -47,7 +47,7 @@ function BusinessInfoForm() {
           <div>
             <input
               type="text"
-              placeholder="State"
+              placeholder=" State"
               className="border-solid border border-black rounded w-20"
             />
           </div>
@@ -55,7 +55,7 @@ function BusinessInfoForm() {
           <div>
             <input
               type="text"
-              placeholder="Zip"
+              placeholder=" Zip"
               className="border-solid border border-black rounded w-20"
             />
           </div>
@@ -64,7 +64,7 @@ function BusinessInfoForm() {
         <div>
           <input
             type="text"
-            placeholder="Business Type"
+            placeholder=" Business Type"
             className="border-solid border border-black rounded w-64"
           />
         </div>
@@ -72,7 +72,7 @@ function BusinessInfoForm() {
         <div>
           <input
             type="text"
-            placeholder="Business Email"
+            placeholder=" Business Email"
             className="border-solid border border-black rounded w-64"
           />
         </div>
@@ -80,7 +80,7 @@ function BusinessInfoForm() {
         <div>
           <input
             type="text"
-            placeholder="Business Phone Number"
+            placeholder=" Business Phone Number"
             className="border-solid border border-black rounded w-64"
           />
         </div>

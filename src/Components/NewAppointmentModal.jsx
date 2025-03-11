@@ -1,4 +1,35 @@
+import { fireStore } from "../Config/firebase-config";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { data } from "autoprefixer";
+
 function NewAppointmentModal({ onClose }) {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const servicesCollection = collection(
+        fireStore,
+        "Joe BarberShop",
+        "Services",
+        "ServicesList"
+      );
+      const servicesSnapshot = await getDocs(servicesCollection);
+      const servicesList = servicesSnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.Title,
+          duration: data.Duration,
+        };
+      });
+
+      setServices(servicesList);
+    };
+
+    fetchServices();
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded shadow-lg z-10">
@@ -36,14 +67,20 @@ function NewAppointmentModal({ onClose }) {
                 required
               />
             </div>
-            {/* Category */}
+            {/* Service */}
             <div>
-              <label className="block text-IconColor">Category</label>
-              <input
+              <label className="block text-IconColor">Service</label>
+              <select
                 className="w-full p-2 border border-gray-300 rounded mt-1"
-                type="text"
                 required
-              />
+              >
+                <option value=""> </option>
+                {services.map((service) => (
+                  <option key={service.id} value={service.title}>
+                    {service.title}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
