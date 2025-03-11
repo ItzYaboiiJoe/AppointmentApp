@@ -1,13 +1,22 @@
 import { fireStore } from "../Config/firebase-config";
 import { useState, useEffect } from "react";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
 
 function NewAppointmentModal({ onClose }) {
   const [services, setServices] = useState([]);
   const [hoursOfOperation, setHoursOfOperation] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    date: "",
+    time: "",
+  });
 
+  // Fetch services and hours of operation from Firestore on component mount
   useEffect(() => {
     const fetchServices = async () => {
       const servicesCollection = collection(
@@ -41,9 +50,11 @@ function NewAppointmentModal({ onClose }) {
     fetchHoursOfOperation();
   }, []);
 
+  // Handle date change and generate available time slots
   const handleDateChange = (event) => {
     const selectedDate = event.target.value;
     setSelectedDate(selectedDate);
+    setFormData({ ...formData, date: selectedDate });
 
     const dateObj = new Date(selectedDate + "T00:00:00");
 
@@ -61,8 +72,11 @@ function NewAppointmentModal({ onClose }) {
     }
   };
 
+  // Generate time slots based on opening and closing times
   const generateTimeSlots = (openingTime, closingTime) => {
     const timeSlots = [];
+
+    // Extract hours, minutes, and period (AM/PM) from opening and closing times
     let [startHour, startMinute, startPeriod] = openingTime
       .match(/(\d+):(\d+)\s*(AM|PM)/)
       .slice(1);
@@ -70,11 +84,13 @@ function NewAppointmentModal({ onClose }) {
       .match(/(\d+):(\d+)\s*(AM|PM)/)
       .slice(1);
 
+    // Convert extracted values to integers
     startHour = parseInt(startHour, 10);
     startMinute = parseInt(startMinute, 10);
     endHour = parseInt(endHour, 10);
     endMinute = parseInt(endMinute, 10);
 
+    // Convert 12-hour format to 24-hour format
     if (startPeriod === "PM" && startHour !== 12) startHour += 12;
     if (endPeriod === "PM" && endHour !== 12) endHour += 12;
     if (startPeriod === "AM" && startHour === 12) startHour = 0;
@@ -83,6 +99,7 @@ function NewAppointmentModal({ onClose }) {
     let currentHour = startHour;
     let currentMinute = startMinute;
 
+    // Generate time slots in 15-minute intervals
     while (
       currentHour < endHour ||
       (currentHour === endHour && currentMinute < endMinute)
@@ -91,8 +108,10 @@ function NewAppointmentModal({ onClose }) {
       const formattedMinute = currentMinute.toString().padStart(2, "0");
       const amPm = currentHour < 12 ? "AM" : "PM";
 
+      // Add formatted time slot to the array
       timeSlots.push(`${formattedHour}:${formattedMinute} ${amPm}`);
 
+      // Increment time by 15 minutes
       currentMinute += 15;
       if (currentMinute >= 60) {
         currentMinute = 0;
@@ -100,7 +119,31 @@ function NewAppointmentModal({ onClose }) {
       }
     }
 
+    // Update state with generated time slots
     setAvailableTimes(timeSlots);
+  };
+
+  // Handle input changes for form fields
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle form submission to add a new appointment
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const appointmentsCollection = collection(
+        fireStore,
+        "Joe BarberShop",
+        "Appointments",
+        "AppointmentsList"
+      );
+      await addDoc(appointmentsCollection, formData);
+      onClose();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
@@ -109,14 +152,17 @@ function NewAppointmentModal({ onClose }) {
         <h2 className="text-xl mb-4 text-IconColor">
           Create a New Appointment
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
             {/* Name */}
             <div>
               <label className="block text-IconColor">Name</label>
               <input
                 type="text"
+                name="name"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                value={formData.name}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -124,8 +170,11 @@ function NewAppointmentModal({ onClose }) {
             <div>
               <label className="block text-IconColor">Email</label>
               <input
-                type="text"
+                type="email"
+                name="email"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                value={formData.email}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -135,8 +184,11 @@ function NewAppointmentModal({ onClose }) {
             <div>
               <label className="block text-IconColor">Phone</label>
               <input
-                type="text"
+                type="number"
+                name="phone"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                value={formData.phone}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -144,7 +196,10 @@ function NewAppointmentModal({ onClose }) {
             <div>
               <label className="block text-IconColor">Service</label>
               <select
+                name="service"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                value={formData.service}
+                onChange={handleInputChange}
                 required
               >
                 <option value="">Select a service</option>
@@ -162,7 +217,9 @@ function NewAppointmentModal({ onClose }) {
               <label className="block text-IconColor">Date</label>
               <input
                 type="date"
+                name="date"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                value={formData.date}
                 onChange={handleDateChange}
                 min={new Date().toISOString().split("T")[0]}
                 required
@@ -172,7 +229,10 @@ function NewAppointmentModal({ onClose }) {
             <div>
               <label className="block text-IconColor">Time</label>
               <select
+                name="time"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
+                value={formData.time}
+                onChange={handleInputChange}
                 required
               >
                 <option value="">Select a time</option>
