@@ -1,9 +1,76 @@
-function EditServiceCardModal({ onClose }) {
+import { fireStore } from "../Config/firebase-config";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
+function EditServiceCardModal({ onClose, serviceId }) {
+  const [loading, setLoading] = useState(true); // State to store the loading status
+
+  // State to store the service details
+  const [service, setService] = useState({
+    Title: "",
+    Price: "",
+    Duration: "",
+    Category: "",
+    Description: "",
+  });
+
+  // Fetch service details when the component mounts or serviceId changes
+  useEffect(() => {
+    const fetchServiceDetails = async () => {
+      const serviceDocRef = doc(
+        fireStore,
+        "Joe BarberShop",
+        "Services",
+        "ServicesList",
+        serviceId
+      );
+      const serviceDoc = await getDoc(serviceDocRef);
+      setService(serviceDoc.data());
+      setLoading(false); // Set loading to false after fetching data
+    };
+
+    fetchServiceDetails();
+  }, [serviceId]);
+
+  // Handle changes in form fields
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setService((prevService) => ({
+      ...prevService,
+      [name]: value,
+    }));
+  };
+
+  // Handle saving the updated service details
+  const handleSave = async () => {
+    const serviceDocRef = doc(
+      fireStore,
+      "Joe BarberShop",
+      "Services",
+      "ServicesList",
+      serviceId
+    );
+    await updateDoc(serviceDocRef, service);
+    onClose(); // Close the modal after saving
+  };
+
+  // Show loading state while fetching data
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded shadow-lg">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Render the form with service details
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg">
         <h2 className="text-xl mb-4 text-IconColor">
-          Edit Service (Service Name)
+          Edit Service ({service.Title})
         </h2>
         <form>
           <div className="grid grid-cols-2 gap-4 mb-4">
@@ -14,6 +81,8 @@ function EditServiceCardModal({ onClose }) {
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 name="Title"
+                value={service.Title}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -24,6 +93,8 @@ function EditServiceCardModal({ onClose }) {
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 name="Price"
+                value={service.Price}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -35,6 +106,8 @@ function EditServiceCardModal({ onClose }) {
               <select
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 name="Duration"
+                value={service.Duration}
+                onChange={handleChange}
                 required
               >
                 <option value="">Select duration</option>
@@ -51,6 +124,8 @@ function EditServiceCardModal({ onClose }) {
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 name="Category"
+                value={service.Category}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -61,6 +136,8 @@ function EditServiceCardModal({ onClose }) {
             <textarea
               className="w-full p-2 border border-gray-300 rounded mt-1"
               name="Description"
+              value={service.Description}
+              onChange={handleChange}
               required
             />
           </div>
@@ -75,7 +152,7 @@ function EditServiceCardModal({ onClose }) {
             </button>
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleSave}
               className="bg-Primary text-white px-4 py-2 rounded hover:bg-[#1e6f65] shadow-xl"
             >
               Save
