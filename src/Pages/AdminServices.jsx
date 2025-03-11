@@ -57,45 +57,47 @@ function AdminServices() {
   }
 
   return (
-    // side Navbar
-    <div className="flex h-screen">
-      <AdminSideNavbar />
-      {/* Top Navbar */}
-      <div className="flex-1 flex flex-col">
-        <AdminTopNavbar pageTitle="Services" />
-        {/* Body Content */}
-        <div className="flex-1 bg-[#EAF4F1] p-6">
-          {/* Add New Button Modal */}
-          <button
-            className="text-Primary float-right"
-            onClick={handleOpenModal}
-          >
-            <IoAddCircleOutline size={35} />
-          </button>
-          {/* Loading Message */}
-          {loading && (
-            <div>
-              <p className="text-gray-700 text-xl font-bold">
-                Loading services...
-              </p>
+    <div className="bg-[#EAF4F1]">
+      {/* side Navbar */}
+      <div className="flex h-screen">
+        <AdminSideNavbar />
+        {/* Top Navbar */}
+        <div className="flex-1 flex flex-col">
+          <AdminTopNavbar pageTitle="Services" />
+          {/* Body Content */}
+          <div className="p-6">
+            {/* Add New Button Modal */}
+            <button
+              className="text-Primary float-right"
+              onClick={handleOpenModal}
+            >
+              <IoAddCircleOutline size={35} />
+            </button>
+            {/* Loading Message */}
+            {loading && (
+              <div>
+                <p className="text-gray-700 text-xl font-bold">
+                  Loading services...
+                </p>
+              </div>
+            )}
+            {/* Error for when there is issues with fetching */}
+            {error && (
+              <div className="max-w-sm bg-red-100 rounded-lg shadow-xl p-4 mb-4">
+                <p className="text-red-500">{error}</p>
+              </div>
+            )}
+            {/* No Services message */}
+            <div className="grid grid-cols-4 gap-4 m-6">
+              {noServices()}
+              {/* Services Cards */}
+              {services.map((service) => (
+                <AdminServicesCards key={service.id} service={service} />
+              ))}
             </div>
-          )}
-          {/* Error for when there is issues with fetching */}
-          {error && (
-            <div className="max-w-sm bg-red-100 rounded-lg shadow-xl p-4 mb-4">
-              <p className="text-red-500">{error}</p>
-            </div>
-          )}
-          {/* No Services message */}
-          <div className="grid grid-cols-4 gap-4 m-6">
-            {noServices()}
-            {/* Services Cards */}
-            {services.map((service) => (
-              <AdminServicesCards key={service.id} service={service} />
-            ))}
           </div>
+          {isModalOpen && <AddNewCardModal onClose={handleCloseModal} />}
         </div>
-        {isModalOpen && <AddNewCardModal onClose={handleCloseModal} />}
       </div>
     </div>
   );

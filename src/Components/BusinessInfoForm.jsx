@@ -38,6 +38,32 @@ function BusinessInfoForm() {
             className="border-solid border border-black w-64"
           />
         </div>
+        <div className="grid grid-cols-3 gap-2 w-64">
+          {/* Business Address City */}
+          <div>
+            <input
+              type="text"
+              placeholder="City"
+              className="border-solid border border-black w-20"
+            />
+          </div>
+          {/* Business Address State */}
+          <div>
+            <input
+              type="text"
+              placeholder="State"
+              className="border-solid border border-black w-20"
+            />
+          </div>
+          {/* Business Address Zip */}
+          <div>
+            <input
+              type="text"
+              placeholder="Zip"
+              className="border-solid border border-black w-20"
+            />
+          </div>
+        </div>
         {/* Business Type */}
         <div>
           <input
