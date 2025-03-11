@@ -9,10 +9,6 @@ function BusinessInfoForm() {
     setShowAvailability(true);
   };
 
-  function handleOpenModal() {
-    setIsModalOpen(true);
-  }
-
   function handleCloseModal() {
     setIsModalOpen(false);
     setShowAvailability(false);
