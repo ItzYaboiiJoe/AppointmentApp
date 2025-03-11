@@ -23,7 +23,7 @@ function BusinessInfoForm() {
           <input
             type="text"
             placeholder="Name"
-            className="border-solid border border-black w-64"
+            className="border-solid border border-black rounded w-64"
           />
         </div>
         {/* Business Address */}
@@ -31,7 +31,7 @@ function BusinessInfoForm() {
           <input
             type="text"
             placeholder="Street Address"
-            className="border-solid border border-black w-64"
+            className="border-solid border border-black rounded w-64"
           />
         </div>
         <div className="grid grid-cols-3 gap-2 w-64">
@@ -40,7 +40,7 @@ function BusinessInfoForm() {
             <input
               type="text"
               placeholder="City"
-              className="border-solid border border-black w-20"
+              className="border-solid border border-black rounded w-20"
             />
           </div>
           {/* Business Address State */}
@@ -48,7 +48,7 @@ function BusinessInfoForm() {
             <input
               type="text"
               placeholder="State"
-              className="border-solid border border-black w-20"
+              className="border-solid border border-black rounded w-20"
             />
           </div>
           {/* Business Address Zip */}
@@ -56,7 +56,7 @@ function BusinessInfoForm() {
             <input
               type="text"
               placeholder="Zip"
-              className="border-solid border border-black w-20"
+              className="border-solid border border-black rounded w-20"
             />
           </div>
         </div>
@@ -65,7 +65,7 @@ function BusinessInfoForm() {
           <input
             type="text"
             placeholder="Business Type"
-            className="border-solid border border-black w-64"
+            className="border-solid border border-black rounded w-64"
           />
         </div>
         {/* Business Email */}
@@ -73,7 +73,7 @@ function BusinessInfoForm() {
           <input
             type="text"
             placeholder="Business Email"
-            className="border-solid border border-black w-64"
+            className="border-solid border border-black rounded w-64"
           />
         </div>
         {/* Business Phone Number */}
@@ -81,7 +81,7 @@ function BusinessInfoForm() {
           <input
             type="text"
             placeholder="Business Phone Number"
-            className="border-solid border border-black w-64"
+            className="border-solid border border-black rounded w-64"
           />
         </div>
         {/* Business Hours */}
