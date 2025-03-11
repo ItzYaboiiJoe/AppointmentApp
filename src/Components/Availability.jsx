@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fireStore } from "../Config/firebase-config";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 function Availability({ onClose }) {
   const days = [
@@ -14,6 +14,7 @@ function Availability({ onClose }) {
   ];
 
   const hours = [
+    "",
     "12:00 AM",
     "12:30 AM",
     "01:00 AM",
@@ -79,6 +80,39 @@ function Availability({ onClose }) {
   );
 
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
+      const docSnap = await getDoc(hoursDocRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newCheckedDays = {};
+        const newTime = {};
+
+        days.forEach((day) => {
+          if (data[day]?.Status === "Open") {
+            newCheckedDays[day] = true;
+            newTime[day] = {
+              OpeningTime: data[day].OpeningTime,
+              ClosingTime: data[day].ClosingTime,
+            };
+          } else {
+            newCheckedDays[day] = false;
+            newTime[day] = { OpeningTime: "", ClosingTime: "" };
+          }
+        });
+
+        setCheckedDays(newCheckedDays);
+        setTime(newTime);
+      }
+      setLoading(false);
+    };
+
+    fetchAvailability();
+  }, []);
 
   const handleCheckboxChange = (day) => {
     setCheckedDays((prev) => ({ ...prev, [day]: !prev[day] }));
@@ -121,6 +155,16 @@ function Availability({ onClose }) {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded shadow-lg">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg">
@@ -153,6 +197,7 @@ function Availability({ onClose }) {
                     !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
                   }`}
                   disabled={!checkedDays[day]}
+                  value={time[day].OpeningTime}
                   onChange={(e) =>
                     handleTimeChange(day, "OpeningTime", e.target.value)
                   }
@@ -170,6 +215,7 @@ function Availability({ onClose }) {
                     !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
                   }`}
                   disabled={!checkedDays[day]}
+                  value={time[day].ClosingTime}
                   onChange={(e) =>
                     handleTimeChange(day, "ClosingTime", e.target.value)
                   }

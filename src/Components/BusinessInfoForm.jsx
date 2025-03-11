@@ -46,6 +46,22 @@ function BusinessInfoForm() {
             className="border-solid border border-black w-64"
           />
         </div>
+        {/* Business Email */}
+        <div>
+          <input
+            type="text"
+            placeholder="Business Email"
+            className="border-solid border border-black w-64"
+          />
+        </div>
+        {/* Business Phone Number */}
+        <div>
+          <input
+            type="text"
+            placeholder="Business Phone Number"
+            className="border-solid border border-black w-64"
+          />
+        </div>
         {/* Business Hours */}
         <div>
           <button
