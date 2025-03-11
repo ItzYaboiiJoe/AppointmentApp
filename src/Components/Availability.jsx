@@ -177,19 +177,21 @@ function Availability({ onClose }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg">
         <div className="p-6 max-w-lg">
-          <h1 className="text-lg font-semibold mb-2">Availability</h1>
+          <h1 className="text-lg font-semibold mb-2 text-IconColor">
+            Availability
+          </h1>
           {/* Headers */}
           <div className="grid grid-cols-3 gap-4 mb-2 text-sm font-medium">
-            <span className="text-left">Select Days</span>
-            <span className="text-center">Opening Time</span>
-            <span className="text-center">Closing Time</span>
+            <span className="text-left text-IconColor">Select Days</span>
+            <span className="text-center text-IconColor">Opening Time</span>
+            <span className="text-center text-IconColor">Closing Time</span>
           </div>
 
           <div className="space-y-2">
             {days.map((day) => (
               <div key={day} className="grid grid-cols-3 gap-4 items-center">
                 {/* Checkbox */}
-                <label className="flex items-center space-x-2">
+                <label className="flex items-center space-x-2 text-IconColor">
                   <input
                     type="checkbox"
                     className="w-4 h-4"
@@ -202,7 +204,9 @@ function Availability({ onClose }) {
                 {/* Opening Time Dropdown */}
                 <select
                   className={`border rounded-md p-1 text-sm w-32 ${
-                    !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
+                    !checkedDays[day]
+                      ? "opacity-15 cursor-not-allowed text-IconColor"
+                      : ""
                   }`}
                   disabled={!checkedDays[day]}
                   value={time[day].OpeningTime}
@@ -220,7 +224,9 @@ function Availability({ onClose }) {
                 {/* Closing Time Dropdown */}
                 <select
                   className={`border rounded-md p-1 text-sm w-32 ${
-                    !checkedDays[day] ? "opacity-15 cursor-not-allowed" : ""
+                    !checkedDays[day]
+                      ? "opacity-15 cursor-not-allowed text-IconColor"
+                      : ""
                   }`}
                   disabled={!checkedDays[day]}
                   value={time[day].ClosingTime}
