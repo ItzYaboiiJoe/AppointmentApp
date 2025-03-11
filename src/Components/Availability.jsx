@@ -3,6 +3,7 @@ import { fireStore } from "../Config/firebase-config";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
 function Availability({ onClose }) {
+  // Define the days of the week
   const days = [
     "Sunday",
     "Monday",
@@ -13,6 +14,7 @@ function Availability({ onClose }) {
     "Saturday",
   ];
 
+  // Define the available hours for selection
   const hours = [
     "",
     "12:00 AM",
@@ -65,6 +67,7 @@ function Availability({ onClose }) {
     "11:30 PM",
   ];
 
+  // State to store the opening and closing times for each day
   const [time, setTime] = useState(
     days.reduce(
       (acc, day) => ({
@@ -75,12 +78,13 @@ function Availability({ onClose }) {
     )
   );
 
+  // State to store which days are checked (open)
   const [checkedDays, setCheckedDays] = useState(
     days.reduce((acc, day) => ({ ...acc, [day]: false }), {})
   );
 
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [message, setMessage] = useState(""); // State to store the message
+  const [loading, setLoading] = useState(true); // State to store the loading status
 
   useEffect(() => {
     const fetchAvailability = async () => {
@@ -108,16 +112,18 @@ function Availability({ onClose }) {
         setCheckedDays(newCheckedDays);
         setTime(newTime);
       }
-      setLoading(false);
+      setLoading(false); // Set loading to false after fetching data
     };
 
     fetchAvailability();
   }, []);
 
+  // Handle checkbox change for each day
   const handleCheckboxChange = (day) => {
     setCheckedDays((prev) => ({ ...prev, [day]: !prev[day] }));
   };
 
+  // Handle time change for each day
   const handleTimeChange = (day, type, value) => {
     setTime((prev) => ({
       ...prev,
@@ -128,6 +134,7 @@ function Availability({ onClose }) {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
@@ -155,6 +162,7 @@ function Availability({ onClose }) {
     }
   };
 
+  // Show loading screen if data is still being fetched
   if (loading) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
