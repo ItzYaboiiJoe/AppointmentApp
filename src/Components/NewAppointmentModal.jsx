@@ -14,6 +14,7 @@ function NewAppointmentModal({ onClose }) {
     service: "",
     date: "",
     time: "",
+    duration: "",
   });
 
   // Fetch services and hours of operation from Firestore on component mount
@@ -127,6 +128,19 @@ function NewAppointmentModal({ onClose }) {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+
+    // Set duration based on selected service
+    if (name === "service") {
+      const selectedService = services.find(
+        (service) => service.title === value
+      );
+      if (selectedService) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          duration: selectedService.duration,
+        }));
+      }
+    }
   };
 
   // Handle form submission to add a new appointment
