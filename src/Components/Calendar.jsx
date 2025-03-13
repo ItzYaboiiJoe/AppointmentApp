@@ -6,9 +6,12 @@ import multiMonthPlugin from "@fullcalendar/multimonth";
 import { fireStore } from "../Config/firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import AppointmentInfoModal from "./AppointmentInfoModal";
 
 function Calendar() {
   const [appointments, setAppointments] = useState([]);
+  const [customerInfo, setCustomerInfo] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -48,16 +51,13 @@ function Calendar() {
   }, []);
 
   const handleEventClick = (info) => {
-    const event = info.event;
-    alert(
-      `Appointment Details:
-    Name: ${event.title}
-    Service: ${event.extendedProps?.service || "Not provided"}
-    Email: ${event.extendedProps?.email || "Not provided"}
-    Phone: ${event.extendedProps?.phone || "Not provided"}
-    Date: ${event.start.toLocaleDateString()}
-    Time: ${event.start.toLocaleTimeString()}`
-    );
+    setSelectedEvent(info.event);
+    setCustomerInfo(true);
+  };
+
+  const closeModal = () => {
+    setCustomerInfo(false);
+    setSelectedEvent(null);
   };
 
   return (
@@ -87,6 +87,9 @@ function Calendar() {
         events={appointments}
         eventClick={handleEventClick}
       />
+      {customerInfo && (
+        <AppointmentInfoModal event={selectedEvent} onClose={closeModal} />
+      )}
     </div>
   );
 }
