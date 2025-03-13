@@ -4,7 +4,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import multiMonthPlugin from "@fullcalendar/multimonth";
 import { fireStore } from "../Config/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import AppointmentInfoModal from "./AppointmentInfoModal";
 
@@ -15,46 +15,46 @@ function Calendar() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAppointments = async () => {
-      const querySnapshot = await getDocs(
-        collection(
-          fireStore,
-          "Joe BarberShop",
-          "Appointments",
-          "AppointmentsList"
-        )
-      );
+    const fetchAppointments = onSnapshot(
+      collection(
+        fireStore,
+        "Joe BarberShop",
+        "Appointments",
+        "AppointmentsList"
+      ),
+      (querySnapshot) => {
+        const events = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
 
-      const events = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
+          // Convert date and time into a valid Date object
+          const dateTimeString = `${data.date} ${data.time}`;
+          const startDate = new Date(dateTimeString);
+          const durationInMinutes = data.duration * 60;
+          const endDate = new Date(
+            startDate.getTime() + durationInMinutes * 1000
+          );
 
-        // Convert date and time into a valid Date object
-        const dateTimeString = `${data.date} ${data.time}`;
-        const startDate = new Date(dateTimeString);
-        const durationInMinutes = data.duration * 60;
-        const endDate = new Date(
-          startDate.getTime() + durationInMinutes * 1000
-        );
+          return {
+            id: doc.id,
+            title: data.name, // Display name
+            start: startDate, // Display Date and Time
+            end: endDate,
+            extendedProps: {
+              service: data.service,
+              email: data.email,
+              phone: data.phone,
+              duration: data.duration,
+            },
+          };
+        });
 
-        return {
-          id: doc.id,
-          title: data.name, // Display name
-          start: startDate, // Display Date and Time
-          end: endDate,
-          extendedProps: {
-            service: data.service,
-            email: data.email,
-            phone: data.phone,
-            duration: data.duration,
-          },
-        };
-      });
+        setAppointments(events);
+        setLoading(false);
+      }
+    );
 
-      setAppointments(events);
-      setLoading(false);
-    };
-
-    fetchAppointments();
+    // Cleanup subscription on unmount
+    return () => fetchAppointments();
   }, []);
 
   const handleEventClick = (info) => {

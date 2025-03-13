@@ -5,7 +5,7 @@ import AdminServicesCards from "../Components/AdminServicesCards";
 import { IoAddCircleOutline } from "react-icons/io5";
 import AddNewCardModal from "../Components/AddNewCardModal";
 import { fireStore } from "../Config/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 
 function AdminServices() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,28 +14,24 @@ function AdminServices() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const servicesCollectionRef = collection(
-          fireStore,
-          "Joe BarberShop",
-          "Services",
-          "ServicesList"
-        );
-        const servicesSnapshot = await getDocs(servicesCollectionRef);
-        const servicesList = servicesSnapshot.docs.map((doc) => ({
+    const fetchData = onSnapshot(
+      collection(fireStore, "Joe BarberShop", "Services", "ServicesList"),
+      (querySnapshot) => {
+        const servicesList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setServices(servicesList);
-      } catch (error) {
+        setLoading(false);
+      },
+      (error) => {
         setError("Error fetching services: " + error.message);
-      } finally {
         setLoading(false);
       }
-    };
+    );
 
-    fetchData();
+    // Cleanup subscription on unmount
+    return () => fetchData();
   }, []);
 
   function handleOpenModal() {
