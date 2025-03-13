@@ -6,6 +6,7 @@ import multiMonthPlugin from "@fullcalendar/multimonth";
 import { fireStore } from "../Config/firebase-config";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { doc, deleteDoc } from "firebase/firestore";
 import AppointmentInfoModal from "./AppointmentInfoModal";
 
 function Calendar() {
@@ -67,6 +68,22 @@ function Calendar() {
     setSelectedEvent(null);
   };
 
+  const deleteAppointment = async (eventId) => {
+    await deleteDoc(
+      doc(
+        fireStore,
+        "Joe BarberShop",
+        "Appointments",
+        "AppointmentsList",
+        eventId
+      )
+    );
+    setAppointments((prevAppointments) =>
+      prevAppointments.filter((event) => event.id !== eventId)
+    );
+    closeModal();
+  };
+
   if (loading) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -105,7 +122,11 @@ function Calendar() {
         eventClick={handleEventClick}
       />
       {customerInfo && (
-        <AppointmentInfoModal event={selectedEvent} onClose={closeModal} />
+        <AppointmentInfoModal
+          event={selectedEvent}
+          onClose={closeModal}
+          onDelete={deleteAppointment}
+        />
       )}
     </div>
   );
