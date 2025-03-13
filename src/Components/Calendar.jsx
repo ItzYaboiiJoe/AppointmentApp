@@ -31,11 +31,16 @@ function Calendar() {
         // Convert date and time into a valid Date object
         const dateTimeString = `${data.date} ${data.time}`;
         const startDate = new Date(dateTimeString);
+        const durationInMinutes = data.duration * 60;
+        const endDate = new Date(
+          startDate.getTime() + durationInMinutes * 1000
+        );
 
         return {
           id: doc.id,
           title: data.name, // Display name
           start: startDate, // Display Date and Time
+          end: endDate,
           extendedProps: {
             service: data.service,
             email: data.email,
