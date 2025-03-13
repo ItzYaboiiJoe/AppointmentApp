@@ -47,10 +47,12 @@ function AdminServices() {
   }
 
   function noServices() {
-    if (!loading && services.length === 0) {
+    if (loading) {
       return (
-        <div>
-          <p className="text-gray-700 text-xl font-bold">No services Created</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded shadow-lg">
+            <p>Loading...</p>
+          </div>
         </div>
       );
     }
@@ -73,14 +75,6 @@ function AdminServices() {
             >
               <IoAddCircleOutline size={35} />
             </button>
-            {/* Loading Message */}
-            {loading && (
-              <div>
-                <p className="text-gray-700 text-xl font-bold">
-                  Loading services...
-                </p>
-              </div>
-            )}
             {/* Error for when there is issues with fetching */}
             {error && (
               <div className="max-w-sm bg-red-100 rounded-lg shadow-xl p-4 mb-4">
