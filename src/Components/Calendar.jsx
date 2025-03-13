@@ -12,6 +12,7 @@ function Calendar() {
   const [appointments, setAppointments] = useState([]);
   const [customerInfo, setCustomerInfo] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -45,6 +46,7 @@ function Calendar() {
       });
 
       setAppointments(events);
+      setLoading(false);
     };
 
     fetchAppointments();
@@ -59,6 +61,16 @@ function Calendar() {
     setCustomerInfo(false);
     setSelectedEvent(null);
   };
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded shadow-lg">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 py-8">
