@@ -61,6 +61,13 @@ function AdminSideNavbar() {
             <span className="MainStyle">Settings</span>
           </NavLink>
         </li>
+        {/* Testing */}
+        <li className="w-full shadow-lg">
+          <NavLink to="/Login" className="ButtonStyle">
+            <MdMiscellaneousServices className="IconStyle" />
+            <span className="MainStyle">Test</span>
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

@@ -1,5 +1,6 @@
 import { FaRegUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 function Login() {
   return (
@@ -51,13 +52,16 @@ function Login() {
             <a href="#" className="text-sm text-blue-500 hover:underline">
               Forgot Password
             </a>
-            <p className="text-sm mt-2 text-gray-600">
-              {/* remove mt-2 */}
-              Don't have an account?{" "}
-              <a href="#" className="text-blue-500 hover:underline">
-                Register
-              </a>
+            <p className="text-sm mt-6 text-gray-600">
+              {/* remove mt-6 */}
+              Interested in hosting your business?
             </p>
+            <NavLink
+              to="/RegisterBusiness"
+              className="text-blue-500 text-sm hover:underline"
+            >
+              Register Now!
+            </NavLink>
           </div>
         </form>
       </div>
