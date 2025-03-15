@@ -3,14 +3,30 @@ import { GrOverview } from "react-icons/gr";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdMiscellaneousServices, MdRoomService } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
+import { useState, useEffect } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { fireStore } from "../Config/firebase-config";
 
 function AdminSideNavbar() {
+  const [businessName, setBusinessName] = useState("");
+
+  useEffect(() => {
+    const docRef = doc(fireStore, "Joe BarberShop", "BusinessInformation");
+    const fetchBusinessName = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setBusinessName(docSnap.data().name);
+      }
+    });
+
+    return () => fetchBusinessName();
+  }, []);
+
   return (
     <nav className="w-48 bg-Primary h-screen flex flex-col items-center py-6">
       {/* Business Name Section */}
       <div className="mb-10 text-white flex items-center flex-col">
         <div className="w-16 h-16 bg-gray-200 rounded-full mb-2"></div>
-        <span className="text-lg font-semibold">Business Name</span>
+        <span className="text-lg font-semibold">{businessName}</span>
       </div>
 
       {/* Navigation NavLinks */}
