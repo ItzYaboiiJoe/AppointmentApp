@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../Config/firebase-config";
-import RegisterNotificationModal from "./RegisterNotificationModal"; // Import Modal
+import RegisterNotificationModal from "./RegisterNotificationModal";
 
 function RegisterBusiness() {
   const [formData, setFormData] = useState({
