@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Availability from "./Availability";
+import { useUser } from "../Config/userContext";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { fireStore } from "../Config/firebase-config";
 
 function BusinessInfoForm() {
+  const { user } = useUser();
   const [showAvailability, setShowAvailability] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -21,7 +23,7 @@ function BusinessInfoForm() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const docRef = doc(fireStore, "Joe BarberShop", "BusinessInformation");
+      const docRef = doc(fireStore, user.businessID, "BusinessInformation");
       const docSnap = await getDoc(docRef);
       docSnap.exists();
       setFormData(docSnap.data());
