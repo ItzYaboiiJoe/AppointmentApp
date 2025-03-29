@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../Config/firebase-config";
 import RegisterNotificationModal from "./RegisterNotificationModal";
+import emailjs from "emailjs-com";
 
 function RegisterBusiness() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ function RegisterBusiness() {
 
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,11 +28,23 @@ function RegisterBusiness() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    const randomID = Math.floor(100000 + Math.random() * 900000);
+  
+    const templateParams = {
+      "Company Name": formData.businessName,
+       email: formData.email,
+      "business ID": randomID,
+    };
+  
     try {
-      // Random 6 digit number generator for business ID
-      const randomID = Math.floor(100000 + Math.random() * 900000);
-
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+  
       const businessInfoDocRef = doc(
         fireStore,
         "businesses",
@@ -38,7 +52,7 @@ function RegisterBusiness() {
         String(randomID),
         "BusinessInformation"
       );
-
+  
       await setDoc(businessInfoDocRef, {
         name: formData.businessName,
         email: formData.email,
@@ -50,18 +64,23 @@ function RegisterBusiness() {
         phoneNumber: formData.phoneNumber,
         businessID: randomID,
       });
-
+  
       setModalMessage("Business Registered Successfully!");
+      setRegistrationSuccess(true);
       setNotificationOpen(true);
     } catch (error) {
       setModalMessage("Error registering business. Please try again.");
+      setRegistrationSuccess(false);
       setNotificationOpen(true);
     }
-  };
+  };  
 
   const handleCloseModal = () => {
     setNotificationOpen(false);
-    navigate("/RegisterAdminUser");
+    
+    if (registrationSuccess) {
+      navigate("/RegisterAdminUser");
+    }
   };
 
   return (
