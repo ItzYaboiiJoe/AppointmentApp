@@ -1,8 +1,11 @@
 import { fireStore } from "../Config/firebase-config";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useUser } from "../Config/userContext";
 
 function EditServiceCardModal({ onClose, serviceId }) {
+  const { user } = useUser();
+
   const [loading, setLoading] = useState(true); // State to store the loading status
 
   // State to store the service details
@@ -19,7 +22,7 @@ function EditServiceCardModal({ onClose, serviceId }) {
     const fetchServiceDetails = async () => {
       const serviceDocRef = doc(
         fireStore,
-        "Joe BarberShop",
+        user.businessID,
         "Services",
         "ServicesList",
         serviceId
@@ -45,7 +48,7 @@ function EditServiceCardModal({ onClose, serviceId }) {
   const handleSave = async () => {
     const serviceDocRef = doc(
       fireStore,
-      "Joe BarberShop",
+      user.businessID,
       "Services",
       "ServicesList",
       serviceId

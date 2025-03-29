@@ -4,14 +4,17 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdMiscellaneousServices, MdRoomService } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
 import { useState, useEffect } from "react";
+import { useUser } from "../Config/userContext";
 import { doc, onSnapshot } from "firebase/firestore";
 import { fireStore } from "../Config/firebase-config";
 
 function AdminSideNavbar() {
+  const { user } = useUser();
+
   const [businessName, setBusinessName] = useState("");
 
   useEffect(() => {
-    const docRef = doc(fireStore, "Joe BarberShop", "BusinessInformation");
+    const docRef = doc(fireStore, user.businessID, "BusinessInformation");
     const fetchBusinessName = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         setBusinessName(docSnap.data().name);

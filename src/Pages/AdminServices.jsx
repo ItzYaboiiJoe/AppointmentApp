@@ -6,8 +6,10 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import AddNewCardModal from "../Components/AddNewCardModal";
 import { fireStore } from "../Config/firebase-config";
 import { collection, onSnapshot } from "firebase/firestore";
+import { useUser } from "../Config/userContext";
 
 function AdminServices() {
+  const { user } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
@@ -15,7 +17,7 @@ function AdminServices() {
 
   useEffect(() => {
     const fetchData = onSnapshot(
-      collection(fireStore, "Joe BarberShop", "Services", "ServicesList"),
+      collection(fireStore, user.businessID, "Services", "ServicesList"),
       (querySnapshot) => {
         const servicesList = querySnapshot.docs.map((doc) => ({
           id: doc.id,

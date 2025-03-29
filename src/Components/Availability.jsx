@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { useUser } from "../Config/userContext";
 import { fireStore } from "../Config/firebase-config";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
 function Availability({ onClose }) {
+  const { user } = useUser();
+
   // Define the days of the week
   const days = [
     "Sunday",
@@ -88,7 +91,7 @@ function Availability({ onClose }) {
 
   useEffect(() => {
     const fetchAvailability = async () => {
-      const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
+      const hoursDocRef = doc(fireStore, user.businessID, "HoursOfOperation");
       const docSnap = await getDoc(hoursDocRef);
 
       if (docSnap.exists()) {
@@ -137,7 +140,7 @@ function Availability({ onClose }) {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
+    const hoursDocRef = doc(fireStore, user.businessID, "HoursOfOperation");
 
     const daysData = days.reduce((acc, day) => {
       if (checkedDays[day]) {

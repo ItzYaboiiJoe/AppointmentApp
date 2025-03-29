@@ -1,8 +1,11 @@
 import { fireStore } from "../Config/firebase-config";
 import { useState, useEffect } from "react";
 import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
+import { useUser } from "../Config/userContext";
 
 function NewAppointmentModal({ onClose }) {
+  const { user } = useUser();
+
   const [services, setServices] = useState([]);
   const [hoursOfOperation, setHoursOfOperation] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
@@ -22,7 +25,7 @@ function NewAppointmentModal({ onClose }) {
     const fetchServices = async () => {
       const servicesCollection = collection(
         fireStore,
-        "Joe BarberShop",
+        user.businessID,
         "Services",
         "ServicesList"
       );
@@ -40,7 +43,7 @@ function NewAppointmentModal({ onClose }) {
     };
 
     const fetchHoursOfOperation = async () => {
-      const hoursDocRef = doc(fireStore, "Joe BarberShop", "HoursOfOperation");
+      const hoursDocRef = doc(fireStore, user.businessID, "HoursOfOperation");
       const hoursSnapshot = await getDoc(hoursDocRef);
       if (hoursSnapshot.exists()) {
         setHoursOfOperation(hoursSnapshot.data());
@@ -149,7 +152,7 @@ function NewAppointmentModal({ onClose }) {
     try {
       const appointmentsCollection = collection(
         fireStore,
-        "Joe BarberShop",
+        user.businessID,
         "Appointments",
         "AppointmentsList"
       );

@@ -8,8 +8,11 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { doc, deleteDoc } from "firebase/firestore";
 import AppointmentInfoModal from "./AppointmentInfoModal";
+import { useUser } from "../Config/userContext";
 
 function Calendar() {
+  const { user } = useUser();
+
   const [appointments, setAppointments] = useState([]);
   const [customerInfo, setCustomerInfo] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -19,7 +22,7 @@ function Calendar() {
     const fetchAppointments = onSnapshot(
       collection(
         fireStore,
-        "Joe BarberShop",
+        user.businessID,
         "Appointments",
         "AppointmentsList"
       ),
@@ -72,7 +75,7 @@ function Calendar() {
     await deleteDoc(
       doc(
         fireStore,
-        "Joe BarberShop",
+        user.businessID,
         "Appointments",
         "AppointmentsList",
         eventId

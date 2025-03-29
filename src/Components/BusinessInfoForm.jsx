@@ -54,7 +54,7 @@ function BusinessInfoForm() {
     e.preventDefault();
     try {
       await setDoc(
-        doc(fireStore, "Joe BarberShop", "BusinessInformation"),
+        doc(fireStore, user.businessID, "BusinessInformation"),
         formData
       );
       setMessage("Business information saved successfully!");

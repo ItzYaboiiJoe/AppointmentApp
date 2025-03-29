@@ -1,15 +1,18 @@
 import { fireStore } from "../Config/firebase-config";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useUser } from "../Config/userContext";
 
 function ConfirmServiceDeleteModal({ onClose, serviceId }) {
+  const { user } = useUser();
+
   const [service, setService] = useState("");
 
   useEffect(() => {
     const fetchServiceTitle = async () => {
       const serviceDocRef = doc(
         fireStore,
-        "Joe BarberShop",
+        user.businessID,
         "Services",
         "ServicesList",
         serviceId
@@ -24,7 +27,7 @@ function ConfirmServiceDeleteModal({ onClose, serviceId }) {
   const handleDelete = async () => {
     const serviceDocRef = doc(
       fireStore,
-      "Joe BarberShop",
+      user.businessID,
       "Services",
       "ServicesList",
       serviceId

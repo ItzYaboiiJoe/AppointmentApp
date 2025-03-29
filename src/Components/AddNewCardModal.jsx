@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useUser } from "../Config/userContext";
 import { fireStore } from "../Config/firebase-config";
 import { collection, doc, addDoc } from "firebase/firestore";
 
 function AddNewCardModal({ onClose }) {
+  const { user } = useUser();
+
   const [service, setService] = useState({
     Title: "",
     Price: "",
@@ -14,7 +17,7 @@ function AddNewCardModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const servicesDocRef = doc(fireStore, "Joe BarberShop", "Services");
+      const servicesDocRef = doc(fireStore, user.businessID, "Services");
       const subCollectionRef = collection(servicesDocRef, "ServicesList");
       await addDoc(subCollectionRef, {
         Title: service.Title,
