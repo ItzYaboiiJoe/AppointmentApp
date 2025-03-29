@@ -17,7 +17,13 @@ function AddNewCardModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const servicesDocRef = doc(fireStore, user.businessID, "Services");
+      const servicesDocRef = doc(
+        fireStore,
+        "businesses",
+        user.businessID,
+        user.businessID,
+        "Services"
+      );
       const subCollectionRef = collection(servicesDocRef, "ServicesList");
       await addDoc(subCollectionRef, {
         Title: service.Title,
@@ -111,7 +117,6 @@ function AddNewCardModal({ onClose }) {
               rows={4}
               value={service.Description}
               onChange={handleChange}
-              required
             />
           </div>
           {/* Save and Cancel Button */}

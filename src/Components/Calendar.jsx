@@ -22,6 +22,8 @@ function Calendar() {
     const fetchAppointments = onSnapshot(
       collection(
         fireStore,
+        "businesses",
+        user.businessID,
         user.businessID,
         "Appointments",
         "AppointmentsList"
@@ -75,6 +77,8 @@ function Calendar() {
     await deleteDoc(
       doc(
         fireStore,
+        "businesses",
+        user.businessID,
         user.businessID,
         "Appointments",
         "AppointmentsList",

@@ -17,7 +17,14 @@ function AdminServices() {
 
   useEffect(() => {
     const fetchData = onSnapshot(
-      collection(fireStore, user.businessID, "Services", "ServicesList"),
+      collection(
+        fireStore,
+        "businesses",
+        user.businessID,
+        user.businessID,
+        "Services",
+        "ServicesList"
+      ),
       (querySnapshot) => {
         const servicesList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -34,7 +41,7 @@ function AdminServices() {
 
     // Cleanup subscription on unmount
     return () => fetchData();
-  }, []);
+  }, [user?.businessID]);
 
   function handleOpenModal() {
     return setIsModalOpen(true);

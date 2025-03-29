@@ -12,6 +12,8 @@ function ConfirmServiceDeleteModal({ onClose, serviceId }) {
     const fetchServiceTitle = async () => {
       const serviceDocRef = doc(
         fireStore,
+        "businesses",
+        user.businessID,
         user.businessID,
         "Services",
         "ServicesList",
@@ -27,6 +29,8 @@ function ConfirmServiceDeleteModal({ onClose, serviceId }) {
   const handleDelete = async () => {
     const serviceDocRef = doc(
       fireStore,
+      "businesses",
+      user.businessID,
       user.businessID,
       "Services",
       "ServicesList",

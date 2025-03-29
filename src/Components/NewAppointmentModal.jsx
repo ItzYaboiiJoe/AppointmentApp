@@ -25,6 +25,8 @@ function NewAppointmentModal({ onClose }) {
     const fetchServices = async () => {
       const servicesCollection = collection(
         fireStore,
+        "businesses",
+        user.businessID,
         user.businessID,
         "Services",
         "ServicesList"
@@ -43,7 +45,13 @@ function NewAppointmentModal({ onClose }) {
     };
 
     const fetchHoursOfOperation = async () => {
-      const hoursDocRef = doc(fireStore, user.businessID, "HoursOfOperation");
+      const hoursDocRef = doc(
+        fireStore,
+        "businesses",
+        user.businessID,
+        user.businessID,
+        "HoursOfOperation"
+      );
       const hoursSnapshot = await getDoc(hoursDocRef);
       if (hoursSnapshot.exists()) {
         setHoursOfOperation(hoursSnapshot.data());
@@ -152,6 +160,8 @@ function NewAppointmentModal({ onClose }) {
     try {
       const appointmentsCollection = collection(
         fireStore,
+        "businesses",
+        user.businessID,
         user.businessID,
         "Appointments",
         "AppointmentsList"

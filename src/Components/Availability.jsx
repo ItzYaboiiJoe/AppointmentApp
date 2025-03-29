@@ -91,7 +91,13 @@ function Availability({ onClose }) {
 
   useEffect(() => {
     const fetchAvailability = async () => {
-      const hoursDocRef = doc(fireStore, user.businessID, "HoursOfOperation");
+      const hoursDocRef = doc(
+        fireStore,
+        "businesses",
+        user.businessID,
+        user.businessID,
+        "HoursOfOperation"
+      );
       const docSnap = await getDoc(hoursDocRef);
 
       if (docSnap.exists()) {
@@ -140,7 +146,13 @@ function Availability({ onClose }) {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const hoursDocRef = doc(fireStore, user.businessID, "HoursOfOperation");
+    const hoursDocRef = doc(
+      fireStore,
+      "businesses",
+      user.businessID,
+      user.businessID,
+      "HoursOfOperation"
+    );
 
     const daysData = days.reduce((acc, day) => {
       if (checkedDays[day]) {

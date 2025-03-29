@@ -21,27 +21,29 @@ function BusinessInfoForm() {
     phoneNumber: "",
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const docRef = doc(fireStore, user.businessID, "BusinessInformation");
-      const docSnap = await getDoc(docRef);
-      docSnap.exists();
-      setFormData(docSnap.data());
-      setLoading(false);
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    const docRef = doc(
+      fireStore,
+      "businesses",
+      user.businessID,
+      user.businessID,
+      "BusinessInformation"
+    );
 
-    fetchData();
-  }, []);
-
-  const handleBusinessHoursClick = () => {
-    setShowAvailability(true);
+    const docSnap = await getDoc(docRef);
+    setFormData(docSnap.data());
+    setLoading(false);
   };
 
-  function handleCloseModal() {
-    setIsModalOpen(false);
-    setShowAvailability(false);
-  }
+  // Fetch data when the component mounts
+  useEffect(() => {
+    if (user?.businessID) {
+      fetchData();
+    }
+  }, [user?.businessID]);
 
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -50,17 +52,36 @@ function BusinessInfoForm() {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await setDoc(
-        doc(fireStore, user.businessID, "BusinessInformation"),
+        doc(
+          fireStore,
+          "businesses",
+          user.businessID,
+          user.businessID,
+          "BusinessInformation"
+        ),
         formData
       );
       setMessage("Business information saved successfully!");
+      fetchData();
     } catch (error) {
       setMessage("Failed to save business information.");
     }
+  };
+
+  // Handle opening the business hours modal
+  const handleBusinessHoursClick = () => {
+    setShowAvailability(true);
+  };
+
+  // Handle closing the modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setShowAvailability(false);
   };
 
   if (loading) {

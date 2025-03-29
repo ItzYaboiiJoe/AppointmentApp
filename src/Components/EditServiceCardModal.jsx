@@ -22,6 +22,8 @@ function EditServiceCardModal({ onClose, serviceId }) {
     const fetchServiceDetails = async () => {
       const serviceDocRef = doc(
         fireStore,
+        "businesses",
+        user.businessID,
         user.businessID,
         "Services",
         "ServicesList",
@@ -48,6 +50,8 @@ function EditServiceCardModal({ onClose, serviceId }) {
   const handleSave = async () => {
     const serviceDocRef = doc(
       fireStore,
+      "businesses",
+      user.businessID,
       user.businessID,
       "Services",
       "ServicesList",
@@ -139,6 +143,7 @@ function EditServiceCardModal({ onClose, serviceId }) {
             <textarea
               className="w-full p-2 border border-gray-300 rounded mt-1"
               name="Description"
+              rows="4"
               value={service.Description}
               onChange={handleChange}
               required

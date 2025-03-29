@@ -31,12 +31,15 @@ function RegisterBusiness() {
       // Random 6 digit number generator for business ID
       const randomID = Math.floor(100000 + Math.random() * 900000);
 
-      // Collection name will be the random number
-      const businessRef = collection(fireStore, String(randomID));
-      // Business Information stored in BusinessInformation document under main collection
-      const docRef = doc(businessRef, "BusinessInformation");
+      const businessInfoDocRef = doc(
+        fireStore,
+        "businesses",
+        String(randomID),
+        String(randomID),
+        "BusinessInformation"
+      );
 
-      await setDoc(docRef, {
+      await setDoc(businessInfoDocRef, {
         name: formData.businessName,
         email: formData.email,
         streetAddress: formData.streetAddress,
