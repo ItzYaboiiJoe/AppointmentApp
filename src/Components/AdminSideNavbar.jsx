@@ -43,6 +43,7 @@ function AdminSideNavbar() {
   const handleSignOut = async () => {
     await signOut(auth); // Sign out the user from Firebase Auth
     setUser(null); // Clear user data from UserContext
+    localStorage.removeItem("user"); // Remove user data from localStorage
     navigate("/Login"); // Redirect to the login page
   };
 

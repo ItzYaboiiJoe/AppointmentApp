@@ -38,14 +38,15 @@ function Login() {
       const userDocRef = doc(fireStore, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
 
-      // Store user data in a global state or context
-      userDoc.exists();
-      const userData = userDoc.data();
-      setUser(userData); //store user data
-      navigate("/AdminOverview");
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUser(userData); // Store user data in context
+        navigate("/AdminOverview");
+      } else {
+        setError("User data not found.");
+      }
     } catch (err) {
       setError("Invalid email or password. Please try again.");
-      console.error("Login error:", err);
     }
   };
 
