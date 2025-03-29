@@ -28,7 +28,12 @@ function RegisterBusiness() {
     e.preventDefault();
 
     try {
-      const businessRef = collection(fireStore, formData.businessName);
+      // Random 6 digit number generator for business ID
+      const randomID = Math.floor(100000 + Math.random() * 900000);
+
+      // Collection name will be the random number
+      const businessRef = collection(fireStore, String(randomID));
+      // Business Information stored in BusinessInformation document under main collection
       const docRef = doc(businessRef, "BusinessInformation");
 
       await setDoc(docRef, {
@@ -40,6 +45,7 @@ function RegisterBusiness() {
         zip: formData.zip,
         businessType: formData.businessType,
         phoneNumber: formData.phoneNumber,
+        businessID: randomID,
       });
 
       setModalMessage("Business Registered Successfully!");

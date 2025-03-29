@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { auth } from "../Config/firebase-config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { fireStore } from "../Config/firebase-config";
 import { useNavigate } from "react-router-dom";
 import RegisterNotificationModal from "./RegisterNotificationModal";
 
@@ -40,9 +42,25 @@ function RegisterAdminUser() {
         displayName: `${formData.fullName} (${formData.username})`,
       });
 
+      // Add user to Firestore under 'users' collection
+      const userRef = collection(fireStore, "users");
+      const userDoc = doc(userRef, user.uid);
+      await setDoc(userDoc, {
+        businessID: formData.ID,
+        fullName: formData.fullName,
+        username: formData.username,
+        email: formData.email,
+      });
+
       setModalMessage("Admin User Registered Successfully!");
       setNotificationOpen(true);
-      setFormData({ fullName: "", username: "", email: "", password: "" });
+      setFormData({
+        fullName: "",
+        username: "",
+        email: "",
+        password: "",
+        ID: "",
+      });
     } catch (err) {
       setModalMessage("Error registering user. Please try again.");
       setNotificationOpen(true);
@@ -105,6 +123,17 @@ function RegisterAdminUser() {
               name="password"
               placeholder="Password"
               value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full py-2 pl-4 bg-transparent border border-gray-500 rounded-full text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="mb-4 relative">
+            <input
+              type="number"
+              name="ID"
+              placeholder="Business ID"
+              value={formData.ID}
               onChange={handleChange}
               required
               className="w-full py-2 pl-4 bg-transparent border border-gray-500 rounded-full text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
