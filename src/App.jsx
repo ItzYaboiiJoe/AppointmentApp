@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./Config/userContext";
-import Login from "./Components/Login";
+import Login from "./PagesLogin";
 import AdminCalendar from "./Pages/AdminCalendar";
 import AdminOverview from "./Pages/AdminOverview";
 import AdminReports from "./Pages/AdminReports";
