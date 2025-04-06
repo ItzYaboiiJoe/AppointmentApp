@@ -28,15 +28,15 @@ function RegisterBusiness() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const randomID = Math.floor(100000 + Math.random() * 900000);
-  
+
     const templateParams = {
       "Company Name": formData.businessName,
-       email: formData.email,
+      email: formData.email,
       "business ID": randomID,
     };
-  
+
     try {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -44,7 +44,7 @@ function RegisterBusiness() {
         templateParams,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
-  
+
       const businessInfoDocRef = doc(
         fireStore,
         "businesses",
@@ -52,7 +52,7 @@ function RegisterBusiness() {
         String(randomID),
         "BusinessInformation"
       );
-  
+
       await setDoc(businessInfoDocRef, {
         name: formData.businessName,
         email: formData.email,
@@ -64,8 +64,10 @@ function RegisterBusiness() {
         phoneNumber: formData.phoneNumber,
         businessID: randomID,
       });
-  
-      setModalMessage("Business Registered Successfully!");
+
+      setModalMessage(
+        "Business Registered Successfully! Please check your email for the business ID."
+      );
       setRegistrationSuccess(true);
       setNotificationOpen(true);
     } catch (error) {
@@ -73,11 +75,11 @@ function RegisterBusiness() {
       setRegistrationSuccess(false);
       setNotificationOpen(true);
     }
-  };  
+  };
 
   const handleCloseModal = () => {
     setNotificationOpen(false);
-    
+
     if (registrationSuccess) {
       navigate("/RegisterAdminUser");
     }
