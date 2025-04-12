@@ -72,6 +72,7 @@ function RegisterBusiness() {
       setNotificationOpen(true);
     } catch (error) {
       setModalMessage("Error registering business. Please try again.");
+      console.error("Error details:", error);
       setRegistrationSuccess(false);
       setNotificationOpen(true);
     }
